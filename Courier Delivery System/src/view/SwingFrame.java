@@ -22,6 +22,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JCheckBox;
 
+import model.Location;
+
 public class SwingFrame extends JFrame {
 
     private static final long serialVersionUID = -5209228424053569693L;
@@ -53,7 +55,7 @@ public class SwingFrame extends JFrame {
         getContentPane().add(lblLocations);
 
         lblWaiting = new JLabel("Waiting for Delivery");
-        lblWaiting.setBounds(283, 338, 98, 14);
+        lblWaiting.setBounds(283, 338, 150, 14);
         getContentPane().add(lblWaiting);
 
         btnCancel = new JButton("Cancel");
@@ -81,7 +83,7 @@ public class SwingFrame extends JFrame {
         });
        
         JCheckBox chckbxDeliverThroughShortest = new JCheckBox("Deliver Through Shortest Path");
-        chckbxDeliverThroughShortest.setBounds(407, 350, 171, 23);
+        chckbxDeliverThroughShortest.setBounds(407, 350, 250, 23);
         getContentPane().add(chckbxDeliverThroughShortest);
         btnCancel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -134,23 +136,23 @@ public class SwingFrame extends JFrame {
         uiPanel.setLayout(null);
 
         lblStart = new JLabel("Start");
-        lblStart.setBounds(21, 291, 46, 14);
+        lblStart.setBounds(21, 291, 60, 14);
         uiPanel.add(lblStart);
 
         lblAirport = new JLabel("Airport");
-        lblAirport.setBounds(411, 46, 46, 14);
+        lblAirport.setBounds(411, 46, 60, 14);
         uiPanel.add(lblAirport);
 
         lblShoeShop = new JLabel("Shoe Shop");
-        lblShoeShop.setBounds(213, 46, 75, 14);
+        lblShoeShop.setBounds(213, 46, 90, 14);
         uiPanel.add(lblShoeShop);
 
         lblHouse = new JLabel("House 1");
-        lblHouse.setBounds(205, 279, 46, 14);
+        lblHouse.setBounds(205, 279, 60, 14);
         uiPanel.add(lblHouse);
 
         lblHouse_1 = new JLabel("House 2");
-        lblHouse_1.setBounds(328, 237, 46, 14);
+        lblHouse_1.setBounds(328, 237, 60, 14);
         uiPanel.add(lblHouse_1);
         
         return uiPanel;
@@ -167,7 +169,7 @@ public class SwingFrame extends JFrame {
         getContentPane().add(currentDeliveryList);
 
         lblDelivering = new JLabel("Currently Delivering");
-        lblDelivering.setBounds(557, 111, 110, 14);
+        lblDelivering.setBounds(557, 111, 140, 14);
         getContentPane().add(lblDelivering);
     }
 
@@ -179,6 +181,9 @@ public class SwingFrame extends JFrame {
         SwingFrame swingFrame = new SwingFrame();
         swingFrame.setSize(800, 600);
         swingFrame.setVisible(true);
+        
+        //Get locations
+        Location loc = new Location();
 
     }
 }
