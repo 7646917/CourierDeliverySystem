@@ -10,11 +10,17 @@ import java.util.List;
 public class Model {
 
     private List<Location> locationList;
-
+    private Postman postman;
+    
     public Model() {
         this.locationList = new ArrayList<>();
+        this.postman = new Postman();
     }
-
+    
+    public void setPostman(Postman newPostman){
+        postman = newPostman;
+    }
+    
     public void addLocation(Location location) {
         this.locationList.add(location);
     }
