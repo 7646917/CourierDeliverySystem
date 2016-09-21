@@ -24,9 +24,9 @@ public class Main
         Model model = new Model();
 
         //Hardcoding the data for the model for now.
-        model.addLocation(new Location("Shoe Shop", 411, 46, 60, 14));
-        model.addLocation(new Location("Pet Store", 213, 46, 90, 14));
-        model.addLocation(new Location("Airport", 205, 279, 60, 14));
+        model.addLocation(new Location("Shoe Shop", 480, 56, 60, 14));
+        model.addLocation(new Location("Pet Store", 450, 320, 90, 14));
+        model.addLocation(new Location("Airport", 200, 170, 60, 14));
         model.addLocation(new Location("House", 328, 237, 60, 14));
 
 
