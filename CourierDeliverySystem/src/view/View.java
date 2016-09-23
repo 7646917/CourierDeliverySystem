@@ -109,11 +109,12 @@ public class View extends JFrame implements ActionListener {
 
         //Loop through locations in the model and add them as radio buttons
         model.getLocationList().forEach(m -> {
-            JRadioButton radioButton = new JRadioButton(m.getName());
-            radioButton.setActionCommand(m.getName()); //Use the name for the action
-            btnGroup.add(radioButton);
-            radioPanel.add(radioButton);
-
+            if(!"Start".equals(m.getName())){
+                JRadioButton radioButton = new JRadioButton(m.getName());
+                radioButton.setActionCommand(m.getName()); //Use the name for the action
+                btnGroup.add(radioButton);
+                radioPanel.add(radioButton);
+            }
         });
 
         //Add the radio panel to the main UI
@@ -156,18 +157,12 @@ public class View extends JFrame implements ActionListener {
         MyLine c = new MyLine();
         uiPanel.add(c);
 
-        lblStart = new JLabel("Start");        
-        lblStart.setBounds(21, 291, 46, 14);
-        uiPanel.add(lblStart);
-
         //Loop through and add locations
         model.getLocationList().forEach(m -> {
             JLabel jLabel = new JLabel(m.getName());
-            jLabel.setBounds(m.getxPos(), m.getyPos(), m.getxSize(), m.getySize());
+            jLabel.setBounds(m.getXPos(), m.getYPos(), m.getXSize(), m.getYSize());
             uiPanel.add(jLabel);
-
         });
-
         return uiPanel;
     }
 
@@ -187,6 +182,7 @@ public class View extends JFrame implements ActionListener {
             GeneralPath path;
             GeneralPath path1;
             GeneralPath path2;
+            
 
             g2.setPaint(Color.GRAY);
             g2.setStroke(new BasicStroke(20.0f));
@@ -213,6 +209,8 @@ public class View extends JFrame implements ActionListener {
             path2.lineTo(200, 200);
             path2.lineTo(300, 500);
             gPath2.draw(path2);
+            
+            g2.drawImage(model.getPostman().getImg(), model.getPostman().getXPos(), model.getPostman().getYPos(), null);
         }
 
         public String test() {

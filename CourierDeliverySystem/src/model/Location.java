@@ -5,7 +5,8 @@ package model;
  */
 public class Location extends BaseUnit {
 
-   public Location(String name, int xPos,int yPos, int xSize, int ySize){
+   
+    public Location(String name, int xPos,int yPos, int xSize, int ySize){
         setName(name);
         setXPos(xPos);
         setYPos(yPos);

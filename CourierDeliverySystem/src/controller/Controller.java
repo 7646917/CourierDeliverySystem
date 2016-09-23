@@ -17,6 +17,8 @@ public class Controller implements Listener {
     public Controller(Model model, View view) {
         this.model = model;
         this.view = view;
+        model.getPostman().moveTo(model.getLocation("Start"));
+        //model.getPostman().moveTo(100,100);
 
     }
 
@@ -25,6 +27,7 @@ public class Controller implements Listener {
         System.out.println("Send!");
         if (view.getListDeliveryQueue().getItemCount() >= 3) {
             //Don't allow adding. Put feedback here.
+      
         } else {
             view.getListDeliveryQueue().add(view.getBtnGroup().getSelection().getActionCommand());
             if (view.getListDeliveryQueue().getItemCount() == 3) {
