@@ -153,8 +153,12 @@ public class View extends JFrame implements ActionListener {
         getContentPane().add(uiPanel);
         uiPanel.setLayout(null);
 
-        MyLine c = new MyLine();
+        Roads c = new Roads(model);
         uiPanel.add(c);
+        
+        Postman_View p = new Postman_View(true);
+        //p.setVisible(false);
+        uiPanel.add(p);
 
         lblStart = new JLabel("Start");        
         lblStart.setBounds(21, 291, 46, 14);
@@ -166,12 +170,13 @@ public class View extends JFrame implements ActionListener {
             jLabel.setBounds(m.getxPos(), m.getyPos(), m.getxSize(), m.getySize());
             uiPanel.add(jLabel);
 
-        });
+        });           
+                
 
         return uiPanel;
     }
 
-    private class MyLine extends JComponent {
+    /*private class MyLine extends JComponent {
 
         public MyLine() {
             //setPreferredSize(new Dimension(100, 100));
@@ -182,11 +187,16 @@ public class View extends JFrame implements ActionListener {
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
 
+                      
             Graphics2D g2 = (Graphics2D) g;
             Graphics2D gPath2 = (Graphics2D) g;
+            Graphics2D gPath3 = (Graphics2D) g;
+             Graphics2D gImg = (Graphics2D) g;
+             
             GeneralPath path;
             GeneralPath path1;
             GeneralPath path2;
+            GeneralPath path3;
 
             g2.setPaint(Color.GRAY);
             g2.setStroke(new BasicStroke(20.0f));
@@ -213,7 +223,25 @@ public class View extends JFrame implements ActionListener {
             path2.lineTo(200, 200);
             path2.lineTo(300, 500);
             gPath2.draw(path2);
-        }
+            
+            gPath3.setPaint(Color.GRAY);
+            gPath3.setStroke(new BasicStroke(20.0f));
+            path3 = new GeneralPath(GeneralPath.WIND_NON_ZERO);
+            path3.moveTo(350, 55);
+            path3.lineTo(525, 280);            
+            gPath3.draw(path3);
+            
+            g.setColor(Color.green);
+           // g.fillOval(50,50,20,20);
+                        
+            model.getJunctionList().forEach(m -> {
+                g.fillOval(m.getxPos(),m.getyPos(),20,20);  
+                g.drawString(m.getName(), m.getxPos(), m.getyPos());
+            });
+                       
+            Image img1 = Toolkit.getDefaultToolkit().getImage("src/resources/images/postman.png");           
+            gImg.drawImage(img1, 80, 250, this);
+        }*/
 
         public String test() {
             System.out.println("testing string");
@@ -221,6 +249,6 @@ public class View extends JFrame implements ActionListener {
         }
     }
 
-}
+//}
 
 

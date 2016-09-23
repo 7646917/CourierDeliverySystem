@@ -12,6 +12,7 @@ package model;
 
  public class BaseUnit {
     private String name;
+    private String jctName;
     private int xPos;
     private int yPos;
     private int xSize;
@@ -30,6 +31,12 @@ package model;
         this.xSize = xSize;
         this.ySize = ySize;
         this.name = name;
+    }
+    
+    public BaseUnit(String jctName, int xPos, int yPos){
+        this.jctName = jctName;
+        this.xPos = xPos;
+        this.yPos = yPos;
     }
     
     public void setXPos(int x){

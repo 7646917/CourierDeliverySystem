@@ -8,11 +8,12 @@ import model.Model;
 import view.Listener;
 import view.View;
 
-import java.awt.event.ActionEvent;
+import view.Postman_View;
 
 public class Controller implements Listener {
     private Model model;
     private View view;
+    private Postman_View p;
 
     public Controller(Model model, View view) {
         this.model = model;
@@ -30,6 +31,9 @@ public class Controller implements Listener {
             if (view.getListDeliveryQueue().getItemCount() == 3) {
                 for (int i = 0; i < 3; i++) {
                     view.getCurrentDeliveryList().add(view.getListDeliveryQueue().getItem(i));
+                    p = new Postman_View(true);
+//                    p.setVisible(true);   
+                    p.repaint();
                 }
                 view.getListDeliveryQueue().removeAll();
             }
