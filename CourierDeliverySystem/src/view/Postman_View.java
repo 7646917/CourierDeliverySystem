@@ -10,6 +10,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Toolkit;
 import javax.swing.JComponent;
+import model.Model;
 
 /**
  *
@@ -17,9 +18,10 @@ import javax.swing.JComponent;
  */
 public class Postman_View extends JComponent{
     private boolean b;
-    public Postman_View(boolean b){
+    private Model model;
+    public Postman_View(boolean b, Model model){
         this.b=b;
-        //Postman_View p = new Postman_View();
+        this.model = model;       
         setVisible(b);
         setBounds(0, 0, 600, 400);
     }
@@ -29,7 +31,10 @@ public class Postman_View extends JComponent{
         super.paintComponent(g);
         Graphics2D gImg = (Graphics2D) g;
         Image img1 = Toolkit.getDefaultToolkit().getImage("src/resources/images/postman.png");
-        gImg.drawImage(img1, 20, 280, this);
+        //gImg.drawImage(img1, 20, 280, this);
+        System.out.println("postman data " + model.getPostman().getXPos()+ "," +model.getPostman().getYPos());
+        gImg.drawImage(img1, model.getPostman().getXPos(),model.getPostman().getYPos(), this);
+        //gImg.drawImage(model.getPostman().getImg(), model.getPostman().getXPos(), model.getPostman().getYPos(), null);
     }
     
 }

@@ -59,19 +59,20 @@ package model;
         name = newName;
     }
     
-    public int getxPos() {
+    public int getXPos() {
+        //System.out.println("xPos " + xPos);
         return xPos;
     }
 
-    public int getyPos() {
+    public int getYPos() {
         return yPos;
     }
 
-    public int getxSize() {
+    public int getXSize() {
         return xSize;
     }
 
-    public int getySize() {
+    public int getYSize() {
         return ySize;
     }
 }

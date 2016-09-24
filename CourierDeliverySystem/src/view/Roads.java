@@ -79,8 +79,8 @@ private Model model;
            // g.fillOval(50,50,20,20);
                         
             model.getJunctionList().forEach(m -> {
-                g.fillOval(m.getxPos(),m.getyPos(),20,20);  
-                g.drawString(m.getName(), m.getxPos(), m.getyPos());
+                g.fillOval(m.getXPos(),m.getYPos(),20,20);  
+                g.drawString(m.getName(), m.getXPos(), m.getYPos());
             });
                        
 //            Image img1 = Toolkit.getDefaultToolkit().getImage("src/resources/images/postman.png");           

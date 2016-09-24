@@ -14,10 +14,14 @@ public class Controller implements Listener {
     private Model model;
     private View view;
     private Postman_View p;
+    private boolean postmanValue;
 
     public Controller(Model model, View view) {
         this.model = model;
         this.view = view;
+        postmanValue = false;
+        //model.getPostman().moveTo(model.getLocation("Start"));  uncomment it 
+        //model.getPostman().moveTo(100,100);
 
     }
 
@@ -26,14 +30,13 @@ public class Controller implements Listener {
         System.out.println("Send!");
         if (view.getListDeliveryQueue().getItemCount() >= 3) {
             //Don't allow adding. Put feedback here.
+      
         } else {
             view.getListDeliveryQueue().add(view.getBtnGroup().getSelection().getActionCommand());
             if (view.getListDeliveryQueue().getItemCount() == 3) {
                 for (int i = 0; i < 3; i++) {
-                    view.getCurrentDeliveryList().add(view.getListDeliveryQueue().getItem(i));
-                    p = new Postman_View(true);
-//                    p.setVisible(true);   
-                    p.repaint();
+                    view.getCurrentDeliveryList().add(view.getListDeliveryQueue().getItem(i));                     
+                    view.showPMan();
                 }
                 view.getListDeliveryQueue().removeAll();
             }
@@ -47,4 +50,13 @@ public class Controller implements Listener {
 
     }
 
+    public boolean isPostmanValue() {
+        return postmanValue;
+    }
+
+    public void setPostmanValue(boolean postmanValue) {
+        this.postmanValue = postmanValue;
+    }
+
+    
 }

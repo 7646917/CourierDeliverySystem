@@ -21,6 +21,8 @@ public class View extends JFrame implements ActionListener {
     private List currentDeliveryList;
     private JPanel uiPanel;
     private JLabel lblStart, lblLocations, lblWaiting, lblDelivering;
+    private boolean showPostmanValue;
+    private Postman_View p;
 
     public ButtonGroup getBtnGroup() {
         return btnGroup;
@@ -33,7 +35,8 @@ public class View extends JFrame implements ActionListener {
     public View(Model model) {
         super("Courier Delivery"); //Calls JFrame super constructor
         this.model = model;
-
+        this.showPostmanValue = false;
+        p = new Postman_View(false, model);
         createGUI();
 
         setActionListeners();
@@ -109,11 +112,12 @@ public class View extends JFrame implements ActionListener {
 
         //Loop through locations in the model and add them as radio buttons
         model.getLocationList().forEach(m -> {
-            JRadioButton radioButton = new JRadioButton(m.getName());
-            radioButton.setActionCommand(m.getName()); //Use the name for the action
-            btnGroup.add(radioButton);
-            radioPanel.add(radioButton);
-
+            if(!"Start".equals(m.getName())){
+                JRadioButton radioButton = new JRadioButton(m.getName());
+                radioButton.setActionCommand(m.getName()); //Use the name for the action
+                btnGroup.add(radioButton);
+                radioPanel.add(radioButton);
+            }
         });
 
         //Add the radio panel to the main UI
@@ -153,96 +157,28 @@ public class View extends JFrame implements ActionListener {
         getContentPane().add(uiPanel);
         uiPanel.setLayout(null);
 
+        //adding roads
         Roads c = new Roads(model);
-        uiPanel.add(c);
+        uiPanel.add(c);        
         
-        Postman_View p = new Postman_View(true);
-        //p.setVisible(false);
+        //adding postman
         uiPanel.add(p);
-
-        lblStart = new JLabel("Start");        
-        lblStart.setBounds(21, 291, 46, 14);
-        uiPanel.add(lblStart);
 
         //Loop through and add locations
         model.getLocationList().forEach(m -> {
             JLabel jLabel = new JLabel(m.getName());
-            jLabel.setBounds(m.getxPos(), m.getyPos(), m.getxSize(), m.getySize());
+            jLabel.setBounds(m.getXPos(), m.getYPos(), m.getXSize(), m.getYSize());
             uiPanel.add(jLabel);
-
-        });           
-                
-
+        });  
         return uiPanel;
     }
-
-    /*private class MyLine extends JComponent {
-
-        public MyLine() {
-            //setPreferredSize(new Dimension(100, 100));
-            setBounds(0, 0, 600, 400);
-        }
-
-        @Override
-        public void paintComponent(Graphics g) {
-            super.paintComponent(g);
-
-                      
-            Graphics2D g2 = (Graphics2D) g;
-            Graphics2D gPath2 = (Graphics2D) g;
-            Graphics2D gPath3 = (Graphics2D) g;
-             Graphics2D gImg = (Graphics2D) g;
-             
-            GeneralPath path;
-            GeneralPath path1;
-            GeneralPath path2;
-            GeneralPath path3;
-
-            g2.setPaint(Color.GRAY);
-            g2.setStroke(new BasicStroke(20.0f));
-            path = new GeneralPath(GeneralPath.WIND_NON_ZERO);
-            path1 = new GeneralPath(GeneralPath.WIND_NON_ZERO);
-
-            ///trial out the road
-            path.moveTo(0, 60);
-            path.lineTo(600, 45);
-            path.lineTo(700, 250);
-            path.lineTo(120, 370);
-
-            path.closePath();
-            g2.draw(path);
-
-            path1.moveTo(350, 60);
-            path1.lineTo(450, 550);
-            g2.draw(path1);
-
-            gPath2.setPaint(Color.GRAY);
-            gPath2.setStroke(new BasicStroke(20.0f));
-            path2 = new GeneralPath(GeneralPath.WIND_NON_ZERO);
-            path2.moveTo(35, 150);
-            path2.lineTo(200, 200);
-            path2.lineTo(300, 500);
-            gPath2.draw(path2);
-            
-            gPath3.setPaint(Color.GRAY);
-            gPath3.setStroke(new BasicStroke(20.0f));
-            path3 = new GeneralPath(GeneralPath.WIND_NON_ZERO);
-            path3.moveTo(350, 55);
-            path3.lineTo(525, 280);            
-            gPath3.draw(path3);
-            
-            g.setColor(Color.green);
-           // g.fillOval(50,50,20,20);
-                        
-            model.getJunctionList().forEach(m -> {
-                g.fillOval(m.getxPos(),m.getyPos(),20,20);  
-                g.drawString(m.getName(), m.getxPos(), m.getyPos());
-            });
-                       
-            Image img1 = Toolkit.getDefaultToolkit().getImage("src/resources/images/postman.png");           
-            gImg.drawImage(img1, 80, 250, this);
-        }*/
-
+    
+    //make postman visible automatic after three locations added in the list
+    public void showPMan(){
+        p.setVisible(true);
+        
+    }
+    
         public String test() {
             System.out.println("testing string");
             return "TestTest";
