@@ -8,18 +8,15 @@ import model.Model;
 import view.Listener;
 import view.View;
 
-import view.Postman_View;
 
 public class Controller implements Listener {
     private Model model;
-    private View view;
-    private Postman_View p;
-    private boolean postmanValue;
+    private View view;    
 
     public Controller(Model model, View view) {
         this.model = model;
         this.view = view;
-        postmanValue = false;
+        //postmanValue = false;
         //model.getPostman().moveTo(model.getLocation("Start"));  uncomment it 
         //model.getPostman().moveTo(100,100);
 
@@ -36,7 +33,7 @@ public class Controller implements Listener {
             if (view.getListDeliveryQueue().getItemCount() == 3) {
                 for (int i = 0; i < 3; i++) {
                     view.getCurrentDeliveryList().add(view.getListDeliveryQueue().getItem(i));                     
-                    view.showPMan();
+                    view.showPostMan();
                 }
                 view.getListDeliveryQueue().removeAll();
             }
@@ -49,14 +46,4 @@ public class Controller implements Listener {
         System.out.println("Cancel...");
 
     }
-
-    public boolean isPostmanValue() {
-        return postmanValue;
-    }
-
-    public void setPostmanValue(boolean postmanValue) {
-        this.postmanValue = postmanValue;
-    }
-
-    
-}
+}   

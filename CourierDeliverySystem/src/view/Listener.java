@@ -5,8 +5,5 @@ package view;
  */
 public interface Listener  {
     void sendActionPerformed();
-    void cancelActionPerformed();
-    boolean isPostmanValue();
-    void setPostmanValue(boolean postmanValue);
-
+    void cancelActionPerformed(); 
 }

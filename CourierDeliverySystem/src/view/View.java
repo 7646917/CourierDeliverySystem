@@ -24,7 +24,7 @@ public class View extends JFrame implements ActionListener {
     private JPanel uiPanel;
     private JLabel lblStart, lblLocations, lblWaiting, lblDelivering;
     private boolean showPostmanValue;
-    private Postman_View p;
+    private Postman_View postman;
     private ImageIcon myImg;
 
     public ButtonGroup getBtnGroup() {
@@ -39,7 +39,7 @@ public class View extends JFrame implements ActionListener {
         super("Courier Delivery"); //Calls JFrame super constructor
         this.model = model;
         this.showPostmanValue = false;
-        p = new Postman_View(false, model);
+        postman = new Postman_View(false, model);
         createGUI();
 
         setActionListeners();
@@ -165,7 +165,7 @@ public class View extends JFrame implements ActionListener {
         uiPanel.add(c);
 
         //adding postman
-        uiPanel.add(p);
+        uiPanel.add(postman);
 
         //Loop through and add locations
         model.getLocationList().forEach(m -> {
@@ -180,8 +180,8 @@ public class View extends JFrame implements ActionListener {
     }
 
     //make postman visible automatic after three locations added in the list
-    public void showPMan() {
-        p.setVisible(true);
+    public void showPostMan() {
+        postman.setVisible(true);
 
     }
 

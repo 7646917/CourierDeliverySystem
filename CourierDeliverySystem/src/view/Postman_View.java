@@ -17,12 +17,12 @@ import model.Model;
  * @author Princy
  */
 public class Postman_View extends JComponent{
-    private boolean b;
+    private boolean visiblePostman;
     private Model model;
-    public Postman_View(boolean b, Model model){
-        this.b=b;
+    public Postman_View(boolean visiblePostman, Model model){
+        this.visiblePostman = visiblePostman;
         this.model = model;       
-        setVisible(b);
+        setVisible(visiblePostman);
         setBounds(0, 0, 600, 400);
     }
     @Override
