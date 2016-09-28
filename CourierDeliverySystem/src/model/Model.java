@@ -1,5 +1,7 @@
 package model;
 
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +14,7 @@ public class Model {
     private ArrayList<Junction> junctionList;    
     private Postman postman;
     //private Junction  j = new Junction();
+   
     public Model() {
         this.locationList = new ArrayList<>();
         this.junctionList = new ArrayList<Junction>();
@@ -39,7 +42,7 @@ public class Model {
     }
     
     public Location getLocation(String name){
-        Location result = new Location("null",0,0,0,0);
+        Location result = new Location("null","null",0,0,0,0);
         try{
             for (Location l : locationList) {
                 if(l.getName().equals(name)){
@@ -83,10 +86,10 @@ public class Model {
     }
     
     public void locationData(){
-       addLocation(new Location("Shoe Shop", 480, 56, 60, 14));
-       addLocation(new Location("Pet Store", 450, 320, 90, 14));
-       addLocation(new Location("Airport", 200, 170, 60, 14));
-       addLocation(new Location("House", 328, 237, 60, 14));
+       addLocation(new Location("Shoe Shop","src/resources/images/house.jpg", 480, 56, 60, 14));
+       addLocation(new Location("Pet Store","src/resources/images/house.jpg", 450, 320, 90, 14));
+       addLocation(new Location("Airport","src/resources/images/house.jpg",200, 170, 60, 14));
+       addLocation(new Location("House","src/resources/images/house.jpg", 328, 237, 60, 14));
     }
 
 

@@ -5,6 +5,8 @@
  */
 package model;
 
+import java.awt.Image;
+
 /**
  * 
  * @author Daniel Mastrowicz 21/09/16
@@ -13,10 +15,12 @@ package model;
  public class BaseUnit {
     private String name;
     private String jctName;
+    private String imgName;
     private int xPos;
     private int yPos;
     private int xSize;
     private int ySize;
+    
     
     public String getName() {
         return name;
@@ -30,6 +34,15 @@ package model;
         this.yPos = yPos;
         this.xSize = xSize;
         this.ySize = ySize;
+        this.name = name;
+    }
+    
+    public BaseUnit(String name,String imgName, int xPos, int yPos, int xSize, int ySize) {
+        this.xPos = xPos;
+        this.yPos = yPos;
+        this.xSize = xSize;
+        this.ySize = ySize;
+        this.imgName = imgName;
         this.name = name;
     }
     
@@ -75,4 +88,15 @@ package model;
     public int getYSize() {
         return ySize;
     }
+
+    public String getImgName() {
+        return imgName;
+    }
+
+    public void setImgName(String imgName) {
+        this.imgName = imgName;
+    }
+
+    
+    
 }

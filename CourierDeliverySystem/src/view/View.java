@@ -6,7 +6,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.geom.GeneralPath;
+import java.awt.image.BufferedImage;
+import java.net.URL;
+import javax.imageio.ImageIO;
 
 /**
  * Created by Dave on 14/09/2016.
@@ -23,6 +25,7 @@ public class View extends JFrame implements ActionListener {
     private JLabel lblStart, lblLocations, lblWaiting, lblDelivering;
     private boolean showPostmanValue;
     private Postman_View p;
+    private ImageIcon myImg;
 
     public ButtonGroup getBtnGroup() {
         return btnGroup;
@@ -112,7 +115,7 @@ public class View extends JFrame implements ActionListener {
 
         //Loop through locations in the model and add them as radio buttons
         model.getLocationList().forEach(m -> {
-            if(!"Start".equals(m.getName())){
+            if (!"Start".equals(m.getName())) {
                 JRadioButton radioButton = new JRadioButton(m.getName());
                 radioButton.setActionCommand(m.getName()); //Use the name for the action
                 btnGroup.add(radioButton);
@@ -159,32 +162,34 @@ public class View extends JFrame implements ActionListener {
 
         //adding roads
         Roads c = new Roads(model);
-        uiPanel.add(c);        
-        
+        uiPanel.add(c);
+
         //adding postman
         uiPanel.add(p);
 
         //Loop through and add locations
         model.getLocationList().forEach(m -> {
             JLabel jLabel = new JLabel(m.getName());
-            jLabel.setBounds(m.getXPos(), m.getYPos(), m.getXSize(), m.getYSize());
+            //System.out.println(m.getImgName());
+            myImg = new ImageIcon(m.getImgName());
+            jLabel.setIcon(myImg);
+            jLabel.setBounds(m.getXPos(), m.getYPos(), m.getXSize()+30, m.getYSize()+10);
             uiPanel.add(jLabel);
-        });  
+        });
         return uiPanel;
     }
-    
+
     //make postman visible automatic after three locations added in the list
-    public void showPMan(){
+    public void showPMan() {
         p.setVisible(true);
-        
+
     }
-    
-        public String test() {
-            System.out.println("testing string");
-            return "TestTest";
-        }
+
+    public String test() {
+        System.out.println("testing string");
+        return "TestTest";
     }
+}
 
 //}
-
 
