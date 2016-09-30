@@ -34,12 +34,15 @@ public class Controller implements Listener {
                 for (int i = 0; i < 3; i++) {
                     view.getCurrentDeliveryList().add(view.getListDeliveryQueue().getItem(i));                     
                     view.showPostMan();
+                    //calculateShortestPath();
                 }
                 view.getListDeliveryQueue().removeAll();
             }
         }
     }
-
+    
+    
+    
     @Override
     public void cancelActionPerformed() {
         view.getListDeliveryQueue().removeAll();
