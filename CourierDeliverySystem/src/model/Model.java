@@ -125,6 +125,8 @@ public class Model {
         addJunction(j6);
         addJunction(j7);
         addJunction(j8);
+        //Test commands to test working properly
+        //System.out.println("Distance between j5 and j7 is " + j5.getDirectPath(j7).getDistance());
     }
     
     public void locationData(){

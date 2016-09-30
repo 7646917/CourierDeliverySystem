@@ -103,8 +103,17 @@ import java.util.List;
         this.imgName = imgName;
     }
 
-     public ArrayList<DirectPath> getDirectPaths(){
+    public ArrayList<DirectPath> getDirectPaths(){
         return directPaths;
+    }
+    
+    public DirectPath getDirectPath(BaseUnit endPoint){
+        DirectPath result = null;
+        if(directPathTo(endPoint)){
+            
+            //result = new DirectPath(this,directPaths.get);
+        }
+        return result;
     }
     
     public void addDirectPath(DirectPath directPath){
@@ -121,6 +130,20 @@ import java.util.List;
             DirectPath newPath = new DirectPath(this,endPoint);
             directPaths.add(newPath);
         }
+    }
+    
+    public Boolean directPathTo(BaseUnit endPoint){
+        return endPointExists(endPoint);
+    }
+    
+    private Boolean endPointExists(BaseUnit endPoint){
+        Boolean result = false;
+         for(int i=0;i<directPaths.size();i++){
+            if(directPaths.get(i).getEnd() == endPoint){
+                result = true;
+            }
+        }
+        return result;
     }
     
 }
