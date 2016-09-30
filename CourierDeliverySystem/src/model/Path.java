@@ -40,6 +40,7 @@ public class Path {
         ArrayList<BaseUnit> closed = new ArrayList<BaseUnit>();
         //set open to the default state
         open.add(start);
+        
         //Set closed to empty, no explored nodes yet.
         closed.clear();
     }

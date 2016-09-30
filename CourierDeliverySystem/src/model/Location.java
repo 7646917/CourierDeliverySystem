@@ -16,13 +16,4 @@ public class Location extends BaseUnit {
         setYSize(ySize);
         setImgName(imgName);
     }
-    
-    public void addDirectPath(DirectPath directPath){
-        this.directPaths.add(directPath);
-    }
-    
-    public ArrayList<DirectPath> getDirectPaths(){
-        return directPaths;
-    }
-    
 }

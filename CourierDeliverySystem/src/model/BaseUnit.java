@@ -6,6 +6,8 @@
 package model;
 
 import java.awt.Image;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 
@@ -20,14 +22,15 @@ import java.awt.Image;
     private int yPos;
     private int xSize;
     private int ySize;
-    
+    private ArrayList<DirectPath> directPaths;
+
     
     public String getName() {
         return name;
     }
     
     public BaseUnit(){
-        
+        directPaths = new ArrayList<DirectPath>();
     }
     public BaseUnit(String name, int xPos, int yPos, int xSize, int ySize) {
         this.xPos = xPos;
@@ -35,6 +38,7 @@ import java.awt.Image;
         this.xSize = xSize;
         this.ySize = ySize;
         this.name = name;
+        directPaths = new ArrayList<DirectPath>();
     }
     
     public BaseUnit(String name,String imgName, int xPos, int yPos, int xSize, int ySize) {
@@ -44,12 +48,14 @@ import java.awt.Image;
         this.ySize = ySize;
         this.imgName = imgName;
         this.name = name;
+        directPaths = new ArrayList<DirectPath>();
     }
     
     public BaseUnit(String jctName, int xPos, int yPos){
         this.jctName = jctName;
         this.xPos = xPos;
         this.yPos = yPos;
+        directPaths = new ArrayList<DirectPath>();
     }
     
     public void setXPos(int x){
@@ -97,6 +103,24 @@ import java.awt.Image;
         this.imgName = imgName;
     }
 
+     public ArrayList<DirectPath> getDirectPaths(){
+        return directPaths;
+    }
     
+    public void addDirectPath(DirectPath directPath){
+        directPaths.add(directPath);
+    }
+    
+    public void addDirectPathTo(BaseUnit end){
+        DirectPath newPath = new DirectPath(this,end);
+        directPaths.add(newPath);
+    }
+    
+    public void addDirectPathsTo(List<BaseUnit> endPoints){
+        for (BaseUnit endPoint : endPoints) {
+            DirectPath newPath = new DirectPath(this,endPoint);
+            directPaths.add(newPath);
+        }
+    }
     
 }
