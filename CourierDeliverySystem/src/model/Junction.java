@@ -27,6 +27,8 @@ public class Junction extends BaseUnit {
         setYPos(yPos);
         addDirectPathsTo(directPaths);
     }
+    
+    
    
     
 }

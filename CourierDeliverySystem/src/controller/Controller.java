@@ -4,7 +4,9 @@ package controller;
  */
 
 
+import java.util.ArrayList;
 import model.Model;
+import model.Path;
 import view.Listener;
 import view.View;
 
@@ -31,11 +33,26 @@ public class Controller implements Listener {
         } else {
             view.getListDeliveryQueue().add(view.getBtnGroup().getSelection().getActionCommand());
             if (view.getListDeliveryQueue().getItemCount() == 3) {
+                //Path newPath = new Path();
                 for (int i = 0; i < 3; i++) {
                     view.getCurrentDeliveryList().add(view.getListDeliveryQueue().getItem(i));                     
                     view.showPostMan();
+                    System.out.println(model.getLocation("Airport").directPaths());
+                    
                     //calculateShortestPath();
                 }
+                
+                
+                //Test path
+                ArrayList<model.BaseUnit> locAndJunc = new ArrayList<>();
+                
+               // locAndJunc.addAll(model.getLocationList());
+                locAndJunc.addAll(model.getJunctionList());
+                //Missing start location???
+                
+                //new path from j1 to 
+                Path testPath = new Path(model.getJunction("j1"),model.getJunction("j2"),locAndJunc);
+                testPath.findShortestPath();
                 view.getListDeliveryQueue().removeAll();
             }
         }

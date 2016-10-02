@@ -23,14 +23,24 @@ import java.util.List;
     private int xSize;
     private int ySize;
     private ArrayList<DirectPath> directPaths;
-
+    private int tentativeDistance;
     
     public String getName() {
         return name;
     }
     
+    public void setTentativeDistance(Integer distance){
+        tentativeDistance = distance;
+    }
+    
+    public Integer getTentativeDistance(){
+        return tentativeDistance;
+    }
+    
+    
     public BaseUnit(){
         directPaths = new ArrayList<DirectPath>();
+        tentativeDistance = Integer.MAX_VALUE;
     }
     public BaseUnit(String name, int xPos, int yPos, int xSize, int ySize) {
         this.xPos = xPos;
@@ -107,11 +117,26 @@ import java.util.List;
         return directPaths;
     }
     
+    public ArrayList<BaseUnit> getNeighbours(){
+        ArrayList<BaseUnit> result = new ArrayList<>();
+        for(DirectPath d : directPaths){
+            result.add(d.getEnd());
+        }
+        return result;
+    }
+    
+    //Get a direct path, if it exists.
     public DirectPath getDirectPath(BaseUnit endPoint){
         DirectPath result = null;
-        if(directPathTo(endPoint)){
-            
-            //result = new DirectPath(this,directPaths.get);
+        try{
+        for(DirectPath path : directPaths){
+            if(path.getStart() == this && path.getEnd() == endPoint){ //If it is a valid path.
+                result = path;
+            }
+        }
+        }catch(Exception e){
+            System.out.println("No direct path found");
+            System.out.println(e);
         }
         return result;
     }
@@ -132,11 +157,12 @@ import java.util.List;
         }
     }
     
-    public Boolean directPathTo(BaseUnit endPoint){
-        return endPointExists(endPoint);
-    }
-    
-    private Boolean endPointExists(BaseUnit endPoint){
+    /***
+     * Whether a path exists to an endpoint from this BaseUnit.
+     * @param endPoint
+     * @return true if path exists to endPoint
+     */
+    public Boolean directPathExists(BaseUnit endPoint){
         Boolean result = false;
          for(int i=0;i<directPaths.size();i++){
             if(directPaths.get(i).getEnd() == endPoint){
@@ -145,5 +171,18 @@ import java.util.List;
         }
         return result;
     }
+    
+    public String directPaths(){
+        String result = "||| ";
+        for(DirectPath d : directPaths){
+        result += ( d.getStart().getName() + " " +  d.getStart().getXPos() + " " + d.getStart().getYPos());
+        result += " to ";
+        result += (d.getEnd().getName() + " " + d.getEnd().getXPos() + " " + d.getEnd().getYPos());
+        result += (" distance " + d.getDistance());
+        result += " ||| ";
+        }
+        return result;
+    }
+    
     
 }

@@ -78,6 +78,7 @@ public class View extends JFrame implements ActionListener {
         JCheckBox chckbxDeliverThroughShortest = new JCheckBox("Deliver Through Shortest Path");
         chckbxDeliverThroughShortest.setBounds(410, 420, 171, 23);
         getContentPane().add(chckbxDeliverThroughShortest);
+        chckbxDeliverThroughShortest.setSelected(true);
 
     }
 
