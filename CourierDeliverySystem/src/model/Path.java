@@ -46,9 +46,8 @@ public class Path {
         
         BaseUnit current = start;
         start.setTentativeDistance(0); //By default in BaseUnit's constructer it is set to Integer.MaxValue
-        visited.add(start);
         unvisited.addAll(nodes);
-        
+        current.setPredecessor(current);
         //For every neighbour of the current node
         try{
         while(!unvisited.isEmpty()){
@@ -68,7 +67,6 @@ public class Path {
                     //If the real distance is less then the tentative distance, set tentative to real.
                     //Will always change the values, since they are initially infinity (or Integer.MaxValue)
                     neighbour.setTentativeDistance(current.getTentativeDistance() + current.getDirectPath(neighbour).getDistance());
-                    
                 }
                 
             }
@@ -79,10 +77,11 @@ public class Path {
             visited.add(current);
             unvisited.remove(current);
             System.out.println("closest neighbour is " + getLowestTentativeDistance(unvisitedNeighbours).getName());
-            
+            getLowestTentativeDistance(unvisitedNeighbours).setPredecessor(current);
             current = getLowestTentativeDistance(unvisitedNeighbours);
             
             if(current == end){
+                visited.add(current);
                 break;
             }
         }
@@ -107,7 +106,7 @@ public class Path {
                 }
             }
         }catch(Exception e){
-            //System.out.println()
+            System.out.println("Null lowest tentative distance");
             System.out.println(e);
         }
         return result;

@@ -24,9 +24,18 @@ import java.util.List;
     private int ySize;
     private ArrayList<DirectPath> directPaths;
     private int tentativeDistance;
+    private BaseUnit predecessor;
     
     public String getName() {
         return name;
+    }
+    
+    public void setPredecessor(BaseUnit predecessor){
+        this.predecessor = predecessor;
+    }
+    
+    public BaseUnit getPredecessor(){
+        return predecessor;
     }
     
     public void setTentativeDistance(Integer distance){

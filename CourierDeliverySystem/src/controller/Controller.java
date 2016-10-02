@@ -5,6 +5,7 @@ package controller;
 
 
 import java.util.ArrayList;
+import model.BaseUnit;
 import model.Model;
 import model.Path;
 import view.Listener;
@@ -51,8 +52,16 @@ public class Controller implements Listener {
                 //Missing start location???
                 
                 //new path from j1 to 
-                Path testPath = new Path(model.getJunction("j1"),model.getJunction("j2"),locAndJunc);
-                testPath.findShortestPath();
+                Path testPath = new Path(model.getJunction("j2"),model.getJunction("j8"),locAndJunc);
+                ArrayList<BaseUnit> shortestPath = testPath.findShortestPath();
+                System.out.println("Shortest path route from j2 to j8 is " );
+                int totalDistance = 0;
+                for(BaseUnit b : shortestPath){
+                    System.out.println(b.getName());
+                    totalDistance += b.getTentativeDistance();
+                }
+                System.out.println("Total distance being: ");
+                System.out.println(totalDistance);
                 view.getListDeliveryQueue().removeAll();
             }
         }

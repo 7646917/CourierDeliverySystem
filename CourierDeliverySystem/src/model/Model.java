@@ -121,9 +121,6 @@ public class Model {
         list = Arrays.asList(j4,j7);
         j5.addDirectPathsTo(list);
         
-        j5.addDirectPathTo(j4);
-        j5.addDirectPathTo(j7);
-        
         list = Arrays.asList(j4,j7,airport);
         j6.addDirectPathsTo(list);
         
