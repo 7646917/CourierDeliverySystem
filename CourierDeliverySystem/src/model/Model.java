@@ -151,13 +151,12 @@ public class Model {
         addJunction(j7);
         addJunction(j8);
         
-        //Test commands to get distance between directPaths
+        /*Test commands to get distance between directPaths
         System.out.println("Distance between j1 and j2 is " + j1.getDirectPath(j2).getDistance());
         System.out.println("Distance between j5 and j7 is " + j5.getDirectPath(j7).getDistance());
         System.out.println("Distance between j2 and Shoeshop is " + j2.getDirectPath(shoeShop).getDistance());
-        //System.out.println("Distance between j1 and j8 is (SHOULDNT WORK) " + j1.getDirectPath(j8).getDistance());
-        
-        
+        System.out.println("Distance between j1 and j8 is (SHOULDNT WORK) " + j1.getDirectPath(j8).getDistance()); Causes exception
+        */
 
     }
     

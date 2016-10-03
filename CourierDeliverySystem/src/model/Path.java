@@ -6,6 +6,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -67,14 +68,32 @@ public class Path {
             System.out.println("Couldnt find shortest path:");
             System.out.println(e);
         }
-        return visited;
+        //So now we have a shortest path, but it is hidden amongs all the visited nodes.
+        
+        ArrayList<BaseUnit> shortestPath = formatShortestPath();
+        
+        return shortestPath;
+    }
+
+    private ArrayList<BaseUnit> formatShortestPath() {
+        ArrayList<BaseUnit> shortestPath = new ArrayList<>();
+        BaseUnit b = end;
+        while (b != start) {
+            shortestPath.add(b);
+            b = b.getPredecessor();
+        }
+        shortestPath.add(start);
+        
+        Collections.reverse(shortestPath);
+        
+        return shortestPath;
     }
 
     private void getNewCurrentNode() {
         //6. Add the current node to visited,
         visited.add(current);
         unvisited.remove(current);
-        System.out.println("closest neighbour is " + getLowestTentativeDistance(unvisited).getName());
+        //System.out.println("closest neighbour is " + getLowestTentativeDistance(unvisited).getName());
 
         getLowestTentativeDistance(unvisited).setPredecessor(current);
         //Set the current explored node to be the lowest neighbour.
@@ -86,13 +105,13 @@ public class Path {
      * @return ArrayList<BaseUnit> which contains all unvisited neighbors.
      */
     private void exploreUnvisited() {
-        System.out.println("Exploring " + current.getName() + " node.");
+        //System.out.println("Exploring " + current.getName() + " node.");
         //Explore every neighbour of current node, that has not been visited.
         for (BaseUnit neighbour : current.getNeighbours()) {
             if (unvisited.contains(neighbour)) {
-                System.out.println("Neighbour: " + neighbour.getName());
-                System.out.println("Distance to neighbour: " + current.getDirectPath(neighbour).getDistance());
-                System.out.println("Tentative distance to neighbour: " + neighbour.getTentativeDistance());
+                //System.out.println("Neighbour: " + neighbour.getName());
+               // System.out.println("Distance to neighbour: " + current.getDirectPath(neighbour).getDistance());
+                //System.out.println("Tentative distance to neighbour: " + neighbour.getTentativeDistance());
                 //5.If the neighbours tentative distance is greater than, the current nodes tentative distance + the edge(directpath)
                 //Then set that neighbours new tentative distance to (current node tentative + the edge distance)
                 if (neighbour.getTentativeDistance() > (current.getTentativeDistance() + current.getDirectPath(neighbour).getDistance())) {
