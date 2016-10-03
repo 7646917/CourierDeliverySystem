@@ -13,112 +13,134 @@ import java.util.Map;
  *
  * @author Daniel
  */
-
 public class Path {
-    
+
     private BaseUnit start;
     private BaseUnit end;
     private ArrayList<BaseUnit> nodes; //All locations and junctions
-    
-    
-    public Path(BaseUnit start, BaseUnit end, ArrayList<BaseUnit> nodes){
+    private ArrayList<BaseUnit> visited; //Contains start
+    private ArrayList<BaseUnit> unvisited; //Contains every other node
+    private BaseUnit current;
+
+    public Path(BaseUnit start, BaseUnit end, ArrayList<BaseUnit> nodes) {
         this.start = start;
         this.end = end;
         this.nodes = nodes;
+        visited = new ArrayList<>();
+        unvisited = new ArrayList<>();
     }
-    
-    public void setStart(BaseUnit start){
+
+    public void setStart(BaseUnit start) {
         this.start = start;
     }
-    
-    public void setEnd(BaseUnit end){
+
+    public void setEnd(BaseUnit end) {
         this.end = end;
     }
+
+    public BaseUnit getEnd() {
+        return end;
+    }
+
+    public BaseUnit getStart() {
+        return start;
+    }
     
-    public ArrayList<BaseUnit> findShortestPath(){
+    public ArrayList<BaseUnit> findShortestPath() {
         //Dijkstra's Algorithm
-        //Using this algorithm as the nodes do not change position and are static.
+        //Using this algorithm as the nodes are static.
         //Vertices are Junctions and Locations
         //Edges are DirectPaths
-        
-        ArrayList<BaseUnit> visited = new ArrayList<>(); //Contains start
-        ArrayList<BaseUnit> unvisited = new ArrayList<>(); //Contains every other node
-        
-        BaseUnit current = start;
-        start.setTentativeDistance(0); //By default in BaseUnit's constructer it is set to Integer.MaxValue
-        unvisited.addAll(nodes);
-        current.setPredecessor(current);
-        //For every neighbour of the current node
-        try{
-        while(!unvisited.isEmpty()){
-        ArrayList<BaseUnit> unvisitedNeighbours = new ArrayList<>();
-        System.out.println("Exploring " + current.getName());
+        initializeSearch();
+        try {
+            //4. While there are still unvisited nodes, explore the neighbours of the lowest node(current).
+            while (!unvisited.isEmpty()) {
+                ArrayList<BaseUnit> unvisitedNeighbours = exploreUnvisitedNeighbours();
+                getNewCurrentNode(unvisitedNeighbours);
+                //If the end node is found. May not be needed;
+                if (current == end) {
+                    visited.add(current);
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Couldnt find shortest path:");
+            System.out.println(e);
+        }
+        return visited;
+    }
 
-        for(BaseUnit neighbour : current.getNeighbours()){
-            //if they are unvisited
-            if(unvisited.contains(neighbour)){
+    private void getNewCurrentNode(ArrayList<BaseUnit> unvisitedNeighbours) {
+        //6. Add the current node to visited,
+        visited.add(current);
+        unvisited.remove(current);
+        System.out.println("closest neighbour is " + getLowestTentativeDistance(unvisitedNeighbours).getName());
+
+        getLowestTentativeDistance(unvisitedNeighbours).setPredecessor(current);
+        //Set the current explored node to be the lowest neighbour.
+        current = getLowestTentativeDistance(unvisitedNeighbours);
+    }
+
+    /**
+     * Explore all unvisited neighbors of the current node.
+     * @return ArrayList<BaseUnit> which contains all unvisited neighbors.
+     */
+    private ArrayList<BaseUnit> exploreUnvisitedNeighbours() {
+        ArrayList<BaseUnit> unvisitedNeighbours = new ArrayList<>();
+        System.out.println("Exploring " + current.getName() + " node.");
+        //Explore every neighbour of current node, that has not been visited.
+        for (BaseUnit neighbour : current.getNeighbours()) {
+            if (unvisited.contains(neighbour)) {
                 System.out.println("Neighbour: " + neighbour.getName());
                 unvisitedNeighbours.add(neighbour);
                 System.out.println("Distance to neighbour: " + current.getDirectPath(neighbour).getDistance());
                 System.out.println("Tentative distance to neighbour: " + neighbour.getTentativeDistance());
-                
-                
-                if(neighbour.getTentativeDistance() > (current.getTentativeDistance() + current.getDirectPath(neighbour).getDistance())){
-                    //If the real distance is less then the tentative distance, set tentative to real.
-                    //Will always change the values, since they are initially infinity (or Integer.MaxValue)
+                //5.If the neighbours tentative distance is greater than, the current nodes tentative distance + the edge(directpath)
+                //Then set that neighbours new tentative distance to (current node tentative + the edge distance)
+                if (neighbour.getTentativeDistance() > (current.getTentativeDistance() + current.getDirectPath(neighbour).getDistance())) {
                     neighbour.setTentativeDistance(current.getTentativeDistance() + current.getDirectPath(neighbour).getDistance());
                 }
-                
-            }
-
-            //Start again
-            }
-           
-            visited.add(current);
-            unvisited.remove(current);
-            System.out.println("closest neighbour is " + getLowestTentativeDistance(unvisitedNeighbours).getName());
-            getLowestTentativeDistance(unvisitedNeighbours).setPredecessor(current);
-            current = getLowestTentativeDistance(unvisitedNeighbours);
-            
-            if(current == end){
-                visited.add(current);
-                break;
             }
         }
-        }catch(Exception e){
-            System.out.println("Couldnt find shortest path:");
-            System.out.println(e);
-        }
-        
-        
-        
-        return visited;
-        //System.out.println("The path from " + start.getName() + " to " + end.getName() + " is ");
+        return unvisitedNeighbours;
     }
-    
-    
-    private BaseUnit getLowestTentativeDistance( ArrayList<BaseUnit> list){
+
+    /**
+     * Initialize the search, set the start node to have 0 tentative distance, 
+     * set the current node to be start, add all nodes to unvisited.
+     */
+    private void initializeSearch() {
+        //1. Set all tentative distances to infinity.
+        // (Completed in BaseUnit's Constructor)
+        //2. Set tentative distance of start node to 0.
+        //3. Start has the lowest cost (0) which means it is the current node.
+        //Add all nodes to unvisited, includes start(but its fine).
+        start.setTentativeDistance(0);
+        current = start;
+        unvisited.addAll(nodes);   
+    }
+
+    /**
+     * Given an arrayList of BaseUnits, determine which has the lowest tentative
+     * distance and return it.
+     * @param list
+     * @return BaseUnit
+     */
+    private BaseUnit getLowestTentativeDistance(ArrayList<BaseUnit> list) {
         BaseUnit result = list.get(0);
-        try{
-            for(BaseUnit b : list){
-                if(result.getTentativeDistance() >= b.getTentativeDistance()){
+        try {
+            for (BaseUnit b : list) {
+                if (result.getTentativeDistance() >= b.getTentativeDistance()) {
                     result = b;
                 }
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println("Null lowest tentative distance");
             System.out.println(e);
         }
         return result;
     }
-    
-    
-    public BaseUnit getEnd(){
-        return end;
-    }
-    
-    public BaseUnit getStart(){
-        return start;
-    }
-   
+
+
+
 }
