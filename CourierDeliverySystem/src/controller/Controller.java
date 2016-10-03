@@ -38,7 +38,7 @@ public class Controller implements Listener {
                 for (int i = 0; i < 3; i++) {
                     view.getCurrentDeliveryList().add(view.getListDeliveryQueue().getItem(i));                     
                     view.showPostMan();
-                    System.out.println(model.getLocation("Airport").directPaths());
+                    //System.out.println(model.getLocation("Airport").directPaths());
                     
                     //calculateShortestPath();
                 }
@@ -47,21 +47,17 @@ public class Controller implements Listener {
                 //Test path
                 ArrayList<model.BaseUnit> locAndJunc = new ArrayList<>();
                 
-               // locAndJunc.addAll(model.getLocationList());
+                locAndJunc.addAll(model.getLocationList());
                 locAndJunc.addAll(model.getJunctionList());
-                //Missing start location???
+                //Missing start location PAT'S HOME??????
                 
-                //new path from j1 to 
-                Path testPath = new Path(model.getJunction("j2"),model.getJunction("j8"),locAndJunc);
+                //new path from j5 to last item added.
+                Path testPath = new Path(model.getJunction("j5"),model.getLocation(view.getListDeliveryQueue().getItem(0)),locAndJunc);
                 ArrayList<BaseUnit> shortestPath = testPath.findShortestPath();
-                System.out.println("Shortest path route from j2 to j8 is " );
-                int totalDistance = 0;
+                System.out.println("Nodes explored on route from j5 to " + view.getListDeliveryQueue().getItem(0) + " are " );
                 for(BaseUnit b : shortestPath){
                     System.out.println(b.getName());
-                    totalDistance += b.getTentativeDistance();
                 }
-                System.out.println("Total distance being: ");
-                System.out.println(totalDistance);
                 view.getListDeliveryQueue().removeAll();
             }
         }
