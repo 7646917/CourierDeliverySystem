@@ -15,5 +15,7 @@ public class Location extends BaseUnit {
         setXSize(xSize);
         setYSize(ySize);
         setImgName(imgName);
+        setTentativeDistance(Integer.MAX_VALUE);
+
     }
 }
