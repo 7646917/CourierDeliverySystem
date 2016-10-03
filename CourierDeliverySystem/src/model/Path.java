@@ -96,19 +96,14 @@ public class Path {
         return shortestPath;
     }
 
-    private Boolean startEqualsEnd() {
-        return (start == end);
-    }
-
     private void getNewCurrentNode() {
         //6. Add the current node to visited,
         BaseUnit nextNode = new BaseUnit();
         visited.add(current);
         unvisited.remove(current);
         System.out.println("closest neighbour is " + getLowestTentativeDistance(unvisited).getName());
-        
+
         nextNode = getLowestTentativeDistance(unvisited);
-        nextNode.setPredecessor(current);
         System.out.println("Set " + nextNode.getName() + " predecessor to " + current.getName());
         //Set the current explored node to be the lowest neighbour.
         current = nextNode;
@@ -131,6 +126,7 @@ public class Path {
                 //Then set that neighbours new tentative distance to (current node tentative + the edge distance)
                 if (neighbour.getTentativeDistance() > (current.getTentativeDistance() + current.getDirectPath(neighbour).getDistance())) {
                     neighbour.setTentativeDistance(current.getTentativeDistance() + current.getDirectPath(neighbour).getDistance());
+                    neighbour.setPredecessor(current);
                 }
             }
         }
@@ -172,11 +168,15 @@ public class Path {
         }
         return result;
     }
-    
-    private void setTentativeDistancesToInfinity(){
-        for(BaseUnit b : nodes){
+
+    private void setTentativeDistancesToInfinity() {
+        for (BaseUnit b : nodes) {
             b.setTentativeDistance(Integer.MAX_VALUE);
         }
+    }
+
+    private Boolean startEqualsEnd() {
+        return (start == end);
     }
 
 }
