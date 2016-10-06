@@ -29,8 +29,7 @@ public class Postman extends BaseUnit {
     }
     
     public void moveTo(Location loc){
-        setXPos(loc.getXPos());
-        setYPos(loc.getYPos());
+
     } 
     
     public void moveTo(int x, int y){
@@ -48,6 +47,11 @@ public class Postman extends BaseUnit {
     
     public Image getImg(){
         return img;
+    }
+
+    public void setLocation(Location loc) {
+        setXPos(loc.getXPos());
+        setYPos(loc.getYPos());
     }
     
 }

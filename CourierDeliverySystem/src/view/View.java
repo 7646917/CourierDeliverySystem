@@ -183,7 +183,6 @@ public class View extends JFrame implements ActionListener {
     //make postman visible automatic after three locations added in the list
     public void showPostMan() {
         postman.setVisible(true);
-
     }
 
     public String test() {

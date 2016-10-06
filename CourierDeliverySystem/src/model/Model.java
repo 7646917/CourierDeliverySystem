@@ -22,8 +22,8 @@ public class Model {
         //this.postman = new Postman();
         locationData();
         junctionData();
-        this.postman = new Postman("Pat",20,280,0,0);
-
+        this.postman = new Postman("Pat",0,0,0,0);
+        this.postman.setLocation(locationList.get(4));
     }
     
     public void setPostman(Postman newPostman){
@@ -94,7 +94,7 @@ public class Model {
         Location petStore = locationList.get(1);
         Location airport = locationList.get(2);
         Location house = locationList.get(3);
-        
+        Location start = locationList.get(4);
         //Initialize all the junctions
         j1 = new Junction("j1",0,58);
         j2 = new Junction("j2", 344, 45);
@@ -118,7 +118,7 @@ public class Model {
         list = Arrays.asList(j3,j5,j6);
         j4.addDirectPathsTo(list);
         
-        list = Arrays.asList(j4,j7);
+        list = Arrays.asList(j4,j7,start);
         j5.addDirectPathsTo(list);
         
         list = Arrays.asList(j4,j7,airport);
@@ -139,6 +139,7 @@ public class Model {
         
         airport.addDirectPathTo(j6);
         shoeShop.addDirectPathTo(j2);
+        start.addDirectPathTo(j5);
         
         
         //Add all junctions, with their direct paths to ArrayList
@@ -167,5 +168,7 @@ public class Model {
        addLocation(new Location("Pet Store","src/resources/images/house.jpg", 450, 320, 90, 14));
        addLocation(new Location("Airport","src/resources/images/house.jpg",200, 170, 60, 14));
        addLocation(new Location("House","src/resources/images/house.jpg", 328, 237, 60, 14));
+       addLocation(new Location("Start","src/resources/images/house.jpg", 110, 300, 60, 14));
+
     }
 }
