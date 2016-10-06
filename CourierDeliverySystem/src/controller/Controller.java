@@ -5,6 +5,7 @@ package controller;
  */
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import model.BaseUnit;
 import model.Model;
 import model.Path;
@@ -45,67 +46,28 @@ public class Controller implements Listener {
 
                 //Test path
                 ArrayList<model.BaseUnit> locAndJunc = new ArrayList<>();
-
+                BaseUnit start;
                 locAndJunc.addAll(model.getLocationList());
                 locAndJunc.addAll(model.getJunctionList());
-                //Missing start location PAT'S HOME??????
+                start = model.getLocation("Start");
+                //RoundTrip newRoundTrip = new RoundTrip(start,locAndJunc);
                 //model.getLocation(view.getListDeliveryQueue().getItem(0))
                 //new path from start to last item added.
 
-                BaseUnit start,loc1, loc2, loc3;
-                start = model.getLocation("Start");
+                BaseUnit loc1,loc2,loc3;
                 loc1 = model.getLocation(view.getListDeliveryQueue().getItem(0));
                 loc2 = model.getLocation(view.getListDeliveryQueue().getItem(1));
                 loc3 = model.getLocation(view.getListDeliveryQueue().getItem(2));
-                Path path1 = new Path(start, loc1, locAndJunc);
-                Path path2 = new Path(loc1, loc2, locAndJunc);
-                Path path3 = new Path(loc2, loc3, locAndJunc);
-                Path path4 = new Path(loc3, start, locAndJunc);
-
-                System.out.println("Total delivery path: ");
-                ArrayList<BaseUnit> shortestPath1 = path1.findShortestPath();
-                System.out.println("Path 1: start to " + loc1.getName());
-                for (BaseUnit b : shortestPath1) {
-                    System.out.print(b.getName());
-                    System.out.print(",");
-                }
-                //Remove packaage
-                System.out.println(" ");
-                view.getCurrentDeliveryList().remove(view.getListDeliveryQueue().getItem(0));
-
-                ArrayList<BaseUnit> shortestPath2 = path2.findShortestPath();
-                System.out.println("Path 2: " + loc1.getName() + " to " + loc2.getName());
-                for (BaseUnit b : shortestPath2) {
-                    System.out.print(b.getName());
-                    System.out.print(",");
-                }
-                //Remove packaage
-                System.out.println(" ");
-
-                view.getCurrentDeliveryList().remove(view.getListDeliveryQueue().getItem(1));
                 
-                ArrayList<BaseUnit> shortestPath3 = path3.findShortestPath();
-                System.out.println("Path 3: " + loc2.getName() + " to " + loc3.getName());
-                for (BaseUnit b : shortestPath3) {
-                    System.out.print(b.getName());
-                    System.out.print(",");
-                }
-                //Remove packaage
-                System.out.println(" ");
+                ArrayList<BaseUnit> destinations = new ArrayList<>();
 
-                view.getCurrentDeliveryList().remove(view.getListDeliveryQueue().getItem(2));
+                destinations.add(loc1);
+                destinations.add(loc2);
+                destinations.add(loc3);
+                RoundTrip newRoundTrip = new RoundTrip(start,destinations,locAndJunc);
                 
-                System.out.println("Delivered all packages, time to go home");
-
-                ArrayList<BaseUnit> shortestPath4 = path4.findShortestPath();
-                System.out.println("Path 4: " + loc3.getName() + " to start");
-                for (BaseUnit b : shortestPath4) {
-                    System.out.print(b.getName());
-                    System.out.print(",");
-                }
-                
-                System.out.println(" ");
-
+                ArrayList<Path> paths = newRoundTrip.findallPaths();
+                newRoundTrip.printPaths();
                 view.getListDeliveryQueue().removeAll();
             }
         }
