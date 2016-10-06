@@ -50,20 +50,21 @@ public class Controller implements Listener {
                 locAndJunc.addAll(model.getJunctionList());
                 //Missing start location PAT'S HOME??????
                 //model.getLocation(view.getListDeliveryQueue().getItem(0))
-                //new path from j5 to last item added.
+                //new path from start to last item added.
 
-                BaseUnit loc1, loc2, loc3;
+                BaseUnit start,loc1, loc2, loc3;
+                start = model.getLocation("Start");
                 loc1 = model.getLocation(view.getListDeliveryQueue().getItem(0));
                 loc2 = model.getLocation(view.getListDeliveryQueue().getItem(1));
                 loc3 = model.getLocation(view.getListDeliveryQueue().getItem(2));
-                Path path1 = new Path(model.getJunction("j5"), loc1, locAndJunc);
+                Path path1 = new Path(start, loc1, locAndJunc);
                 Path path2 = new Path(loc1, loc2, locAndJunc);
                 Path path3 = new Path(loc2, loc3, locAndJunc);
-                Path path4 = new Path(loc3, model.getJunction("j5"), locAndJunc);
+                Path path4 = new Path(loc3, start, locAndJunc);
 
                 System.out.println("Total delivery path: ");
                 ArrayList<BaseUnit> shortestPath1 = path1.findShortestPath();
-                System.out.println("Path 1: j5 to " + loc1.getName());
+                System.out.println("Path 1: start to " + loc1.getName());
                 for (BaseUnit b : shortestPath1) {
                     System.out.print(b.getName());
                     System.out.print(",");
@@ -97,7 +98,7 @@ public class Controller implements Listener {
                 System.out.println("Delivered all packages, time to go home");
 
                 ArrayList<BaseUnit> shortestPath4 = path4.findShortestPath();
-                System.out.println("Path 4: " + loc3.getName() + " to j5");
+                System.out.println("Path 4: " + loc3.getName() + " to start");
                 for (BaseUnit b : shortestPath4) {
                     System.out.print(b.getName());
                     System.out.print(",");
