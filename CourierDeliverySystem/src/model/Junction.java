@@ -19,6 +19,8 @@ public class Junction extends BaseUnit {
         setName(jctName);
         setXPos(xPos);
         setYPos(yPos);
+        setTentativeDistance(Integer.MAX_VALUE);
+
     }  
    
     public Junction(String name, int xPos, int yPos, List<BaseUnit> directPaths){
@@ -26,7 +28,11 @@ public class Junction extends BaseUnit {
         setXPos(xPos);
         setYPos(yPos);
         addDirectPathsTo(directPaths);
+        setTentativeDistance(Integer.MAX_VALUE);
+
     }
+    
+    
    
     
 }
