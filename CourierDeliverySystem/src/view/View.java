@@ -175,10 +175,10 @@ public class View extends JFrame implements ActionListener {
     }
 
 
-<<<<<<< HEAD
     public MapPanel getMapPanel() {
         return mapPanel;
-=======
+
+        /*
         //Loop through and add locations
         model.getLocationList().forEach(m -> {
             JLabel jLabel = new JLabel(m.getName());
@@ -188,17 +188,16 @@ public class View extends JFrame implements ActionListener {
             jLabel.setBounds(m.getXPos(), m.getYPos(), m.getXSize()+30, m.getYSize()+10);
             uiPanel.add(jLabel);
         });
-        return uiPanel;
+        return uiPanel;*/
     }
 
     //make postman visible automatic after three locations added in the list
-    public void showPostMan() {
+    /*public void showPostMan() {
         postman.setVisible(true);
-    }
+    }*/
 
     public String test() {
         System.out.println("testing string");
         return "TestTest";
->>>>>>> 2198f2d04bed9b82037791d556abb40239f7cc96
     }
 }

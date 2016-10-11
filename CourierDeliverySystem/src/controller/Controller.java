@@ -12,14 +12,11 @@ import model.Path;
 import view.Listener;
 import view.View;
 
-<<<<<<< HEAD
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
 
 
-=======
->>>>>>> 2198f2d04bed9b82037791d556abb40239f7cc96
 public class Controller implements Listener {
 
     private Model model;
@@ -46,13 +43,10 @@ public class Controller implements Listener {
                 //Path newPath = new Path();
                 for (int i = 0; i < 3; i++) {
                     view.getCurrentDeliveryList().add(view.getListDeliveryQueue().getItem(i));
-<<<<<<< HEAD
 
                     DeployPostman();
-=======
-                    view.showPostMan();
+                    //view.showPostMan();
                     //System.out.println(model.getLocation("Airport").directPaths());
->>>>>>> 2198f2d04bed9b82037791d556abb40239f7cc96
 
                     //calculateShortestPath();
                 }
@@ -86,7 +80,6 @@ public class Controller implements Listener {
         }
     }
 
-<<<<<<< HEAD
     private void DeployPostman() {
         //Update the postman at the model
         ArrayList<Point> pointList = new ArrayList<>();
@@ -140,8 +133,6 @@ public class Controller implements Listener {
     }
 
 
-=======
->>>>>>> 2198f2d04bed9b82037791d556abb40239f7cc96
     @Override
     public void cancelActionPerformed() {
         view.getListDeliveryQueue().removeAll();

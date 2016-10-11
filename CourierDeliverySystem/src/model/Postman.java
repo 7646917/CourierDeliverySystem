@@ -51,7 +51,6 @@ public class Postman extends BaseUnit {
         return img;
     }
 
-<<<<<<< HEAD
     public boolean isVisible() {
         return isVisible;
     }
@@ -59,11 +58,9 @@ public class Postman extends BaseUnit {
     public void setVisible(boolean visible) {
         isVisible = visible;
     }
-=======
     public void setLocation(Location loc) {
         setXPos(loc.getXPos());
         setYPos(loc.getYPos());
     }
     
->>>>>>> 2198f2d04bed9b82037791d556abb40239f7cc96
 }

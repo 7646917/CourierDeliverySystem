@@ -22,14 +22,11 @@ public class Model {
         //this.postman = new Postman();
         locationData();
         junctionData();
-<<<<<<< HEAD
+
         this.postman = new Postman("Pat",20,280,50,50);
         this.postman.setImgName("resources/images/postman.png");
-
-=======
-        this.postman = new Postman("Pat",0,0,0,0);
         this.postman.setLocation(locationList.get(4));
->>>>>>> 2198f2d04bed9b82037791d556abb40239f7cc96
+
     }
     
     public void setPostman(Postman newPostman){
@@ -37,11 +34,8 @@ public class Model {
     }
     
     public Postman getPostman(){
-<<<<<<< HEAD
+
         System.out.println("getPostman() xPos: " + postman.getXPos()+", yPos: " + postman.getXPos());
-=======
-        //System.out.println("getPostman() " + postman.getName()+", " + postman.getXPos());
->>>>>>> 2198f2d04bed9b82037791d556abb40239f7cc96
         return postman;
     }
 
