@@ -6,13 +6,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.net.URL;
-import javax.imageio.ImageIO;
+import java.awt.geom.Ellipse2D;
 
 /**
  * Created by Dave on 14/09/2016.
  */
+
 public class View extends JFrame implements ActionListener {
 
     private Model model;
@@ -23,9 +22,12 @@ public class View extends JFrame implements ActionListener {
     private List currentDeliveryList;
     private JPanel uiPanel;
     private JLabel lblStart, lblLocations, lblWaiting, lblDelivering;
-    private boolean showPostmanValue;
-    private Postman_View postman;
+    //private boolean showPostmanValue;
+    //private Postman_View postman;
+    //private Postman postman;
     private ImageIcon myImg;
+
+    private MapPanel mapPanel;
 
     public ButtonGroup getBtnGroup() {
         return btnGroup;
@@ -37,23 +39,42 @@ public class View extends JFrame implements ActionListener {
 
     public View(Model model) {
         super("Courier Delivery"); //Calls JFrame super constructor
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.model = model;
-        this.showPostmanValue = false;
-        postman = new Postman_View(false, model);
-        createGUI();
 
+
+        /*
+                frame = new JFrame("Test");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        imgPanel = new ImageTestPanel(new GridLayout(), false);
+
+        frame.getContentPane().add(BorderLayout.CENTER, imgPanel);
+
+
+        frame.setVisible(true);
+         */
+
+        //getContentPane().setLayout(null);
+        createGUI();
         setActionListeners();
 
-        getContentPane().setLayout(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setResizable(false);
         setSize(800, 600);
-        setLocation(100, 100);
+        setLocationRelativeTo(null);
         setVisible(true);
     }
 
     public void createGUI() {
 
-        createUIPanel();
+        mapPanel = new MapPanel(null, false, this.model);
+        mapPanel.setBounds(32, 11, 580, 380);
+        getContentPane().add(mapPanel);
+
+        //createUIPanel();
+        //getContentPane().add(uiPanel);
+
+
         addAllLists();
         addLocationToWaiting();
 
@@ -152,44 +173,8 @@ public class View extends JFrame implements ActionListener {
 
     }
 
-    //cretaing UI map panel
-    public JPanel createUIPanel() {
-        uiPanel = new JPanel();
-        uiPanel.setBackground(Color.WHITE);
-        uiPanel.setBounds(32, 11, 580, 380);
-        getContentPane().add(uiPanel);
-        uiPanel.setLayout(null);
 
-        //adding roads
-        Roads c = new Roads(model);
-        uiPanel.add(c);
-
-        //adding postman
-        uiPanel.add(postman);
-
-        //Loop through and add locations
-        model.getLocationList().forEach(m -> {
-            JLabel jLabel = new JLabel(m.getName());
-            //System.out.println(m.getImgName());
-            myImg = new ImageIcon(m.getImgName());
-            jLabel.setIcon(myImg);
-            jLabel.setBounds(m.getXPos(), m.getYPos(), m.getXSize()+30, m.getYSize()+10);
-            uiPanel.add(jLabel);
-        });
-        return uiPanel;
-    }
-
-    //make postman visible automatic after three locations added in the list
-    public void showPostMan() {
-        postman.setVisible(true);
-
-    }
-
-    public String test() {
-        System.out.println("testing string");
-        return "TestTest";
+    public MapPanel getMapPanel() {
+        return mapPanel;
     }
 }
-
-//}
-

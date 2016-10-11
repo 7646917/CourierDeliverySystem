@@ -19,6 +19,7 @@ public class Postman extends BaseUnit {
     
     private int moveSpeed;
     private Image img;
+    private boolean isVisible;
     
     public Postman(String name, int xPos,int yPos, int xSize, int ySize){
         setName(name);
@@ -26,6 +27,7 @@ public class Postman extends BaseUnit {
         setYPos(yPos);
         setXSize(xSize);
         setYSize(ySize);
+        isVisible = false;
     }
     
     public void moveTo(Location loc){
@@ -49,5 +51,12 @@ public class Postman extends BaseUnit {
     public Image getImg(){
         return img;
     }
-    
+
+    public boolean isVisible() {
+        return isVisible;
+    }
+
+    public void setVisible(boolean visible) {
+        isVisible = visible;
+    }
 }
