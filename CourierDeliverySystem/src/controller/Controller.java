@@ -5,10 +5,8 @@ package controller;
  */
 
 import java.awt.event.ActionEvent;
-import model.BaseUnit;
-import model.Model;
-import model.Path;
-import model.Postman;
+
+import model.*;
 import view.Listener;
 import view.View;
 import javax.swing.Timer;
@@ -25,7 +23,8 @@ public class Controller implements Listener {
 
     private double i; //Interpolation factor
 
-    private Point end; //HACK: replace this with a proper destination
+    private Point end;
+    private Point start;
 
     public Controller(Model model, View view) {
         this.model = model;
@@ -53,7 +52,9 @@ public class Controller implements Listener {
                 }
 
                 //HACK: end point to be implemented properly
-                DeployPostman(new Point(200,200));
+                //DeployPostman(new Point(200,200));
+                DeployPostman( new Point(model.getLocation(view.getListDeliveryQueue().getItem(0)).getXPos(),
+                        model.getLocation(view.getListDeliveryQueue().getItem(0)).getYPos()));
 
                 //calculateShortestPath();
 
@@ -89,6 +90,7 @@ public class Controller implements Listener {
     @Override
     public void cancelActionPerformed() {
         view.getListDeliveryQueue().removeAll();
+        view.getCurrentDeliveryList().removeAll();
         System.out.println("Cancel...");
 
     }
@@ -99,8 +101,11 @@ public class Controller implements Listener {
         postman.setVisible(true);
         view.getBtnPost().setEnabled(false);
 
+        //Set the start and end destinations
+        start = new Point(postman.getXPos(), postman.getYPos());
         end = destination;
-        animationLoop = new Timer(100, this);
+
+        animationLoop = new Timer(10, this);
         //animationLoop.setRepeats(true);
         animationLoop.setCoalesce(true);
         animationLoop.start();
@@ -114,7 +119,15 @@ public class Controller implements Listener {
         int newX = (int) (start.x + dx * fraction);
         int newY = (int) (start.y + dy * fraction);
 
-        return new Point(newX, newY);
+        System.out.println("NewX: " + newX + " NewY: "+ newY);
+
+        //Catch all when the end has gone past start
+        if (dx > 0 && newX > end.x)
+            return end;
+        else if (dx < 0 && newX < end.x)
+            return end;
+        else
+            return new Point(newX, newY);
     }
 
     @Override
@@ -124,9 +137,10 @@ public class Controller implements Listener {
             view.getBtnPost().setEnabled(true);
         } else {
             i += 0.005;
-            Point p = interpolate(new Point(postman.getXPos(), postman.getYPos()), end, i);
+            Point p = interpolate(start, end, i);
             postman.setXPos(p.x);
             postman.setYPos(p.y);
+
             view.getMapPanel().repaint();
 
         }
