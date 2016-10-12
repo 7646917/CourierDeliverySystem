@@ -4,21 +4,34 @@ package controller;
  * Created by Dave on 14/09/2016.
  */
 
-import java.util.ArrayList;
-import model.BaseUnit;
-import model.Model;
-import model.Path;
+import java.awt.event.ActionEvent;
+
+import model.*;
 import view.Listener;
 import view.View;
+import javax.swing.Timer;
+import java.awt.*;
+import java.util.ArrayList;
+
 
 public class Controller implements Listener {
 
+    public static final double INTERPOLATION_FACTOR = 0.005;
     private Model model;
     private View view;
+    private Timer animationLoop;
+    private Postman postman;
+
+    private double i; //Interpolation factor
+
+    private Point end;
+    private Point start;
 
     public Controller(Model model, View view) {
         this.model = model;
         this.view = view;
+        this.postman = model.getPostman();
+
         //postmanValue = false;
         //model.getPostman().moveTo(model.getLocation("Start"));  uncomment it 
         //model.getPostman().moveTo(100,100);
@@ -37,75 +50,39 @@ public class Controller implements Listener {
                 //Path newPath = new Path();
                 for (int i = 0; i < 3; i++) {
                     view.getCurrentDeliveryList().add(view.getListDeliveryQueue().getItem(i));
-                    view.showPostMan();
-                    //System.out.println(model.getLocation("Airport").directPaths());
-
-                    //calculateShortestPath();
                 }
+
+                //HACK: end point to be implemented properly
+                //DeployPostman(new Point(200,200));
+                DeployPostman( new Point(model.getLocation(view.getListDeliveryQueue().getItem(0)).getXPos(),
+                        model.getLocation(view.getListDeliveryQueue().getItem(0)).getYPos()));
+
+                //calculateShortestPath();
 
                 //Test path
                 ArrayList<model.BaseUnit> locAndJunc = new ArrayList<>();
-
+                BaseUnit start;
                 locAndJunc.addAll(model.getLocationList());
                 locAndJunc.addAll(model.getJunctionList());
-                //Missing start location PAT'S HOME??????
+                start = model.getLocation("Start");
+                //RoundTrip newRoundTrip = new RoundTrip(start,locAndJunc);
                 //model.getLocation(view.getListDeliveryQueue().getItem(0))
                 //new path from start to last item added.
 
-                BaseUnit start,loc1, loc2, loc3;
-                start = model.getLocation("Start");
+                BaseUnit loc1,loc2,loc3;
                 loc1 = model.getLocation(view.getListDeliveryQueue().getItem(0));
                 loc2 = model.getLocation(view.getListDeliveryQueue().getItem(1));
                 loc3 = model.getLocation(view.getListDeliveryQueue().getItem(2));
-                Path path1 = new Path(start, loc1, locAndJunc);
-                Path path2 = new Path(loc1, loc2, locAndJunc);
-                Path path3 = new Path(loc2, loc3, locAndJunc);
-                Path path4 = new Path(loc3, start, locAndJunc);
-
-                System.out.println("Total delivery path: ");
-                ArrayList<BaseUnit> shortestPath1 = path1.findShortestPath();
-                System.out.println("Path 1: start to " + loc1.getName());
-                for (BaseUnit b : shortestPath1) {
-                    System.out.print(b.getName());
-                    System.out.print(",");
-                }
-                //Remove packaage
-                System.out.println(" ");
-                view.getCurrentDeliveryList().remove(view.getListDeliveryQueue().getItem(0));
-
-                ArrayList<BaseUnit> shortestPath2 = path2.findShortestPath();
-                System.out.println("Path 2: " + loc1.getName() + " to " + loc2.getName());
-                for (BaseUnit b : shortestPath2) {
-                    System.out.print(b.getName());
-                    System.out.print(",");
-                }
-                //Remove packaage
-                System.out.println(" ");
-
-                view.getCurrentDeliveryList().remove(view.getListDeliveryQueue().getItem(1));
                 
-                ArrayList<BaseUnit> shortestPath3 = path3.findShortestPath();
-                System.out.println("Path 3: " + loc2.getName() + " to " + loc3.getName());
-                for (BaseUnit b : shortestPath3) {
-                    System.out.print(b.getName());
-                    System.out.print(",");
-                }
-                //Remove packaage
-                System.out.println(" ");
+                ArrayList<BaseUnit> destinations = new ArrayList<>();
 
-                view.getCurrentDeliveryList().remove(view.getListDeliveryQueue().getItem(2));
+                destinations.add(loc1);
+                destinations.add(loc2);
+                destinations.add(loc3);
+                RoundTrip newRoundTrip = new RoundTrip(start,destinations,locAndJunc);
                 
-                System.out.println("Delivered all packages, time to go home");
-
-                ArrayList<BaseUnit> shortestPath4 = path4.findShortestPath();
-                System.out.println("Path 4: " + loc3.getName() + " to start");
-                for (BaseUnit b : shortestPath4) {
-                    System.out.print(b.getName());
-                    System.out.print(",");
-                }
-                
-                System.out.println(" ");
-
+                ArrayList<Path> paths = newRoundTrip.findallPaths();
+                newRoundTrip.printPaths();
                 view.getListDeliveryQueue().removeAll();
             }
         }
@@ -114,7 +91,61 @@ public class Controller implements Listener {
     @Override
     public void cancelActionPerformed() {
         view.getListDeliveryQueue().removeAll();
+        view.getCurrentDeliveryList().removeAll();
         System.out.println("Cancel...");
 
+    }
+
+    private void DeployPostman(Point destination) {
+        System.out.println("Deploying postman");
+
+        postman.setVisible(true);
+        view.getBtnPost().setEnabled(false);
+
+        //Set the start and end destinations
+        start = new Point(postman.getXPos(), postman.getYPos());
+        end = destination;
+
+        animationLoop = new Timer(10, this);
+        //animationLoop.setRepeats(true);
+        animationLoop.setCoalesce(true);
+        animationLoop.start();
+
+    }
+
+    private Point interpolate(Point start, Point end, double fraction) {
+        int dx = end.x - start.x;
+        int dy = end.y - start.y;
+
+        int newX = (int) (start.x + dx * fraction);
+        int newY = (int) (start.y + dy * fraction);
+
+        //System.out.println("NewX: " + newX + " NewY: "+ newY + "| dx: " + dx + " dy: " + dy + "| endX: " +end.x);
+
+        //Catch all when the end has gone past start
+        if (dx > 0 && newX > end.x)
+            return end;
+        else if (dx < 0 && newX < end.x)
+            return end;
+        else
+            return new Point(newX, newY);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(postman.getXPos() == end.x && postman.getYPos() == end.y) {
+            animationLoop.stop();
+            view.getBtnPost().setEnabled(true);
+            i=0;
+
+        } else {
+            i += INTERPOLATION_FACTOR;
+            Point p = interpolate(start, end, i);
+            postman.setXPos(p.x);
+            postman.setYPos(p.y);
+
+            view.getMapPanel().repaint();
+
+        }
     }
 }

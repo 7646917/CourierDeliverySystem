@@ -22,6 +22,7 @@ public class Path {
     private ArrayList<BaseUnit> visited; //Contains start
     private ArrayList<BaseUnit> unvisited; //Contains every other node
     private BaseUnit current;
+    private ArrayList<BaseUnit> shortestPath;
 
     public Path(BaseUnit start, BaseUnit end, ArrayList<BaseUnit> nodes) {
         this.start = start;
@@ -29,6 +30,15 @@ public class Path {
         this.nodes = nodes;
         visited = new ArrayList<>();
         unvisited = new ArrayList<>();
+    }
+    
+    public void printPath(){
+        System.out.println("Start: " + start.getName() + " End: " + end.getName());
+        for(BaseUnit b : shortestPath){
+            System.out.print(b.getName());
+            System.out.print(" ");
+        }
+        
     }
 
     public void setStart(BaseUnit start) {
@@ -77,7 +87,7 @@ public class Path {
         //So now we have a shortest path, but it is hidden amongs all the visited nodes.
 
         ArrayList<BaseUnit> shortestPath = formatShortestPath();
-
+        this.shortestPath = shortestPath;
         return shortestPath;
     }
 
