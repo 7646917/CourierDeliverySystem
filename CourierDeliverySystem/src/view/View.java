@@ -20,42 +20,17 @@ public class View extends JFrame implements ActionListener {
     private JButton btnPost, btnCancel;
     private List listDeliveryQueue;
     private List currentDeliveryList;
-    private JPanel uiPanel;
-    private JLabel lblStart, lblLocations, lblWaiting, lblDelivering;
-    //private boolean showPostmanValue;
-    //private Postman_View postman;
-    //private Postman postman;
-    private ImageIcon myImg;
-
     private MapPanel mapPanel;
 
-    public ButtonGroup getBtnGroup() {
-        return btnGroup;
-    }
-
-    public List getCurrentDeliveryList() {
-        return currentDeliveryList;
-    }
+    private JLabel lblLocations, lblWaiting, lblDelivering;
 
     public View(Model model) {
         super("Courier Delivery"); //Calls JFrame super constructor
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
         this.model = model;
 
-
-        /*
-                frame = new JFrame("Test");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        imgPanel = new ImageTestPanel(new GridLayout(), false);
-
-        frame.getContentPane().add(BorderLayout.CENTER, imgPanel);
-
-
-        frame.setVisible(true);
-         */
-
-        //getContentPane().setLayout(null);
+        getContentPane().setLayout(null);
         createGUI();
         setActionListeners();
 
@@ -67,13 +42,10 @@ public class View extends JFrame implements ActionListener {
 
     public void createGUI() {
 
+
         mapPanel = new MapPanel(null, true, this.model);
         mapPanel.setBounds(32, 11, 580, 380);
         getContentPane().add(mapPanel);
-
-        //createUIPanel();
-        //getContentPane().add(uiPanel);
-
 
         addAllLists();
         addLocationToWaiting();
@@ -153,10 +125,6 @@ public class View extends JFrame implements ActionListener {
         return btnGroup;
     }
 
-    public void setListener(Listener listener) {
-        this.listener = listener;
-    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if (listener != null) {
@@ -174,6 +142,9 @@ public class View extends JFrame implements ActionListener {
 
     }
 
+    public void setListener(Listener listener) {
+        this.listener = listener;
+    }
 
     public MapPanel getMapPanel() {
         return mapPanel;
@@ -191,17 +162,16 @@ public class View extends JFrame implements ActionListener {
         return uiPanel;*/
     }
 
-    //make postman visible automatic after three locations added in the list
-    /*public void showPostMan() {
-        postman.setVisible(true);
-    }*/
-
-    public String test() {
-        System.out.println("testing string");
-        return "TestTest";
-    }
-
     public JButton getBtnPost() {
         return btnPost;
     }
+
+    public ButtonGroup getBtnGroup() {
+        return btnGroup;
+    }
+
+    public List getCurrentDeliveryList() {
+        return currentDeliveryList;
+    }
+
 }

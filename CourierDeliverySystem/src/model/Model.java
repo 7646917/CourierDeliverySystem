@@ -166,14 +166,12 @@ public class Model {
 
     }
     
-    
-    
     public void locationData(){
-       addLocation(new Location("Shoe Shop","src/resources/images/house.jpg", 480, 56, 60, 14));
-       addLocation(new Location("Pet Store","src/resources/images/house.jpg", 450, 320, 90, 14));
-       addLocation(new Location("Airport","src/resources/images/house.jpg",200, 170, 60, 14));
-       addLocation(new Location("House","src/resources/images/house.jpg", 328, 237, 60, 14));
-       addLocation(new Location("Start","src/resources/images/house.jpg", 110, 300, 60, 14));
+       addLocation(new Location("Shoe Shop","resources/images/house.jpg", 480, 56, 60, 14));
+       addLocation(new Location("Pet Store","resources/images/house.jpg", 450, 320, 90, 14));
+       addLocation(new Location("Airport","resources/images/house.jpg",200, 170, 60, 14));
+       addLocation(new Location("House","resources/images/house.jpg", 328, 237, 60, 14));
+       addLocation(new Location("Start","resources/images/house.jpg", 110, 300, 60, 14));
 
     }
 }

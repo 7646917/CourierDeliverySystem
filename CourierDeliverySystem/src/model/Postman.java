@@ -7,6 +7,7 @@ package model;
 
 
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
@@ -19,6 +20,7 @@ public class Postman extends BaseUnit {
     
     private int moveSpeed;
     private Image img;
+    private BufferedImage postImage;
     private boolean isVisible;
     
     public Postman(String name, int xPos,int yPos, int xSize, int ySize){
@@ -28,6 +30,7 @@ public class Postman extends BaseUnit {
         setXSize(xSize);
         setYSize(ySize);
         isVisible = false;
+
     }
     
     public void moveTo(Location loc){
@@ -63,5 +66,16 @@ public class Postman extends BaseUnit {
         setXPos(loc.getXPos());
         setYPos(loc.getYPos());
     }
-    
+
+    public BufferedImage getPostImage() {
+        if (postImage == null) {
+            try {
+                postImage = ImageIO.read(new File(getImgName()));
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+        return postImage;
+    }
 }

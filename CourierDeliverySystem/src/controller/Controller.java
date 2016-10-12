@@ -5,16 +5,12 @@ package controller;
  */
 
 import java.awt.event.ActionEvent;
-import java.util.*;
-
 import model.BaseUnit;
 import model.Model;
 import model.Path;
 import model.Postman;
 import view.Listener;
 import view.View;
-
-import javax.swing.*;
 import javax.swing.Timer;
 import java.awt.*;
 import java.util.ArrayList;
@@ -54,14 +50,12 @@ public class Controller implements Listener {
                 //Path newPath = new Path();
                 for (int i = 0; i < 3; i++) {
                     view.getCurrentDeliveryList().add(view.getListDeliveryQueue().getItem(i));
-
-                    //view.showPostMan();
-                    //System.out.println(model.getLocation("Airport").directPaths());
-
-                    //calculateShortestPath();
                 }
 
-                DeployPostman();
+                //HACK: end point to be implemented properly
+                DeployPostman(new Point(200,200));
+
+                //calculateShortestPath();
 
                 //Test path
                 ArrayList<model.BaseUnit> locAndJunc = new ArrayList<>();
@@ -99,61 +93,17 @@ public class Controller implements Listener {
 
     }
 
-    private void DeployPostman() {
-
-        view.getBtnPost().setEnabled(false);
-
+    private void DeployPostman(Point destination) {
         System.out.println("Deploying postman");
 
-        end = new Point(150,150);
-        animationLoop = new Timer(100, this);
+        postman.setVisible(true);
+        view.getBtnPost().setEnabled(false);
 
-        animationLoop.setRepeats(true);
+        end = destination;
+        animationLoop = new Timer(100, this);
+        //animationLoop.setRepeats(true);
         animationLoop.setCoalesce(true);
         animationLoop.start();
-
-
-
-
-        /*
-        //Update the postman at the model
-        ArrayList<Point> pointList = new ArrayList<>();
-        Random rand = new Random();
-
-        for (int i = 0; i < 2 + rand.nextInt(10); i++) {
-            pointList.add(new Point(rand.nextInt( view.getMapPanel().getWidth()),
-                    rand.nextInt( view.getMapPanel().getHeight())));
-        }
-
-        //Point start  = pointList.get(0);
-
-        Point start = new Point();
-        start.setLocation(model.getPostman().getXPos(),model.getPostman().getYPos());
-
-        Point end = pointList.get(1);
-
-        //MoveBetween2Points(pointList.get(0), pointList.get(1),  view.getMapPanel());
-
-        for (double i = 0.0; i <= 1.0; i += 0.005) {
-            //Point p = interpolate(pointList.get(0), pointList.get(1), i);
-            Point p = interpolate(start, end, i);
-            model.getPostman().setXPos(p.x);
-            model.getPostman().setYPos(p.y);
-
-            view.getMapPanel().repaint();
-
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }*/
-
-
-        //Redraw the panel which will get the visibility flag from the model
-
-
-        //view.getPostman();
 
     }
 
