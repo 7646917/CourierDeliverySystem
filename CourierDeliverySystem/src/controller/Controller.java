@@ -54,8 +54,7 @@ public class Controller implements Listener {
 
                 //HACK: end point to be implemented properly
                 //DeployPostman(new Point(200,200));
-                DeployPostman( new Point(model.getLocation(view.getListDeliveryQueue().getItem(0)).getXPos(),
-                        model.getLocation(view.getListDeliveryQueue().getItem(0)).getYPos()));
+                
 
                 //calculateShortestPath();
 
@@ -73,16 +72,29 @@ public class Controller implements Listener {
                 loc1 = model.getLocation(view.getListDeliveryQueue().getItem(0));
                 loc2 = model.getLocation(view.getListDeliveryQueue().getItem(1));
                 loc3 = model.getLocation(view.getListDeliveryQueue().getItem(2));
+               
+                ArrayList<Path> allPaths = new ArrayList<>();
+                Path p1 = new Path(start, loc1, locAndJunc);
+                Path p2 = new Path(loc1, loc2, locAndJunc);
+                Path p3 = new Path(loc2, loc3, locAndJunc);
+                Path p4 = new Path(loc3, start, locAndJunc);
                 
-                ArrayList<BaseUnit> destinations = new ArrayList<>();
+                System.out.println("before loop");
+                ArrayList<BaseUnit> shortest = p1.findShortestPath();
+                System.out.println("after shortest");
 
-                destinations.add(loc1);
-                destinations.add(loc2);
-                destinations.add(loc3);
-                RoundTrip newRoundTrip = new RoundTrip(start,destinations,locAndJunc);
+                //Deploy to each baseunit of path1,path2,path3,path4.
+                for(BaseUnit b : p1.findShortestPath()){
+                    if(i != 0){
+                        System.out.println("TEST");
+                        Point point = new Point(b.getXPos(),b.getYPos());
+                        DeployPostman(point);
+                    }
+                }
+                //DeployPostman( new Point(model.getLocation(view.getListDeliveryQueue().getItem(0)).getXPos(),
+                  //      model.getLocation(view.getListDeliveryQueue().getItem(0)).getYPos()));
+                //ArrayList<BaseUnit> destinations = new ArrayList<>();
                 
-                ArrayList<Path> paths = newRoundTrip.findallPaths();
-                newRoundTrip.printPaths();
                 view.getListDeliveryQueue().removeAll();
             }
         }
@@ -95,9 +107,15 @@ public class Controller implements Listener {
         System.out.println("Cancel...");
 
     }
+    
+    //x=0,y=0
+    //new point x=1,y=1
+    //While not this new point
+    //wait
+    //
 
     private void DeployPostman(Point destination) {
-        System.out.println("Deploying postman");
+        System.out.println("Deploying postman to " + destination.getX() + destination.getY());
 
         postman.setVisible(true);
         view.getBtnPost().setEnabled(false);
