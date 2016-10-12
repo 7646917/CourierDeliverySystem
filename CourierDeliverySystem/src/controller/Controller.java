@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 public class Controller implements Listener {
 
+    public static final double INTERPOLATION_FACTOR = 0.005;
     private Model model;
     private View view;
     private Timer animationLoop;
@@ -119,7 +120,7 @@ public class Controller implements Listener {
         int newX = (int) (start.x + dx * fraction);
         int newY = (int) (start.y + dy * fraction);
 
-        System.out.println("NewX: " + newX + " NewY: "+ newY);
+        //System.out.println("NewX: " + newX + " NewY: "+ newY + "| dx: " + dx + " dy: " + dy + "| endX: " +end.x);
 
         //Catch all when the end has gone past start
         if (dx > 0 && newX > end.x)
@@ -135,8 +136,10 @@ public class Controller implements Listener {
         if(postman.getXPos() == end.x && postman.getYPos() == end.y) {
             animationLoop.stop();
             view.getBtnPost().setEnabled(true);
+            i=0;
+
         } else {
-            i += 0.005;
+            i += INTERPOLATION_FACTOR;
             Point p = interpolate(start, end, i);
             postman.setXPos(p.x);
             postman.setYPos(p.y);
