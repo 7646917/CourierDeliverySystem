@@ -35,7 +35,7 @@ public class Model {
     
     public Postman getPostman(){
 
-        System.out.println("getPostman() xPos: " + postman.getXPos()+", yPos: " + postman.getXPos());
+        //System.out.println("getPostman() xPos: " + postman.getXPos()+", yPos: " + postman.getXPos());
         return postman;
     }
 

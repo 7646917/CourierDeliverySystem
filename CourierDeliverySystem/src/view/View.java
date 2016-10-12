@@ -67,7 +67,7 @@ public class View extends JFrame implements ActionListener {
 
     public void createGUI() {
 
-        mapPanel = new MapPanel(null, false, this.model);
+        mapPanel = new MapPanel(null, true, this.model);
         mapPanel.setBounds(32, 11, 580, 380);
         getContentPane().add(mapPanel);
 
@@ -199,5 +199,9 @@ public class View extends JFrame implements ActionListener {
     public String test() {
         System.out.println("testing string");
         return "TestTest";
+    }
+
+    public JButton getBtnPost() {
+        return btnPost;
     }
 }

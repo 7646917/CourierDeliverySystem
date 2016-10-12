@@ -58,6 +58,7 @@ public class Postman extends BaseUnit {
     public void setVisible(boolean visible) {
         isVisible = visible;
     }
+
     public void setLocation(Location loc) {
         setXPos(loc.getXPos());
         setYPos(loc.getYPos());

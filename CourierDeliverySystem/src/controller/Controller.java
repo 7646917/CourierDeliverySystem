@@ -4,27 +4,38 @@ package controller;
  * Created by Dave on 14/09/2016.
  */
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.awt.event.ActionEvent;
+import java.util.*;
+
 import model.BaseUnit;
 import model.Model;
 import model.Path;
+import model.Postman;
 import view.Listener;
 import view.View;
 
+import javax.swing.*;
+import javax.swing.Timer;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Random;
 
 
 public class Controller implements Listener {
 
     private Model model;
     private View view;
+    private Timer animationLoop;
+    private Postman postman;
+
+    private double i; //Interpolation factor
+
+    private Point end; //HACK: replace this with a proper destination
 
     public Controller(Model model, View view) {
         this.model = model;
         this.view = view;
+        this.postman = model.getPostman();
+
         //postmanValue = false;
         //model.getPostman().moveTo(model.getLocation("Start"));  uncomment it 
         //model.getPostman().moveTo(100,100);
@@ -44,12 +55,13 @@ public class Controller implements Listener {
                 for (int i = 0; i < 3; i++) {
                     view.getCurrentDeliveryList().add(view.getListDeliveryQueue().getItem(i));
 
-                    DeployPostman();
                     //view.showPostMan();
                     //System.out.println(model.getLocation("Airport").directPaths());
 
                     //calculateShortestPath();
                 }
+
+                DeployPostman();
 
                 //Test path
                 ArrayList<model.BaseUnit> locAndJunc = new ArrayList<>();
@@ -80,7 +92,30 @@ public class Controller implements Listener {
         }
     }
 
+    @Override
+    public void cancelActionPerformed() {
+        view.getListDeliveryQueue().removeAll();
+        System.out.println("Cancel...");
+
+    }
+
     private void DeployPostman() {
+
+        view.getBtnPost().setEnabled(false);
+
+        System.out.println("Deploying postman");
+
+        end = new Point(150,150);
+        animationLoop = new Timer(100, this);
+
+        animationLoop.setRepeats(true);
+        animationLoop.setCoalesce(true);
+        animationLoop.start();
+
+
+
+
+        /*
         //Update the postman at the model
         ArrayList<Point> pointList = new ArrayList<>();
         Random rand = new Random();
@@ -112,7 +147,7 @@ public class Controller implements Listener {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        }
+        }*/
 
 
         //Redraw the panel which will get the visibility flag from the model
@@ -122,7 +157,7 @@ public class Controller implements Listener {
 
     }
 
-    public Point interpolate(Point start, Point end, double fraction) {
+    private Point interpolate(Point start, Point end, double fraction) {
         int dx = end.x - start.x;
         int dy = end.y - start.y;
 
@@ -132,11 +167,18 @@ public class Controller implements Listener {
         return new Point(newX, newY);
     }
 
-
     @Override
-    public void cancelActionPerformed() {
-        view.getListDeliveryQueue().removeAll();
-        System.out.println("Cancel...");
+    public void actionPerformed(ActionEvent e) {
+        if(postman.getXPos() == end.x && postman.getYPos() == end.y) {
+            animationLoop.stop();
+            view.getBtnPost().setEnabled(true);
+        } else {
+            i += 0.005;
+            Point p = interpolate(new Point(postman.getXPos(), postman.getYPos()), end, i);
+            postman.setXPos(p.x);
+            postman.setYPos(p.y);
+            view.getMapPanel().repaint();
 
+        }
     }
 }
