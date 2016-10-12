@@ -27,12 +27,12 @@ public class Postman_View extends JComponent{
     }
     @Override
     public void paintComponent(Graphics g) {
-        System.out.println("testing postman view");
+       // System.out.println("testing postman view");
         super.paintComponent(g);
         Graphics2D gImg = (Graphics2D) g;
         Image img1 = Toolkit.getDefaultToolkit().getImage("src/resources/images/postman.png");
         //gImg.drawImage(img1, 20, 280, this);
-        System.out.println("postman data " + model.getPostman().getXPos()+ "," +model.getPostman().getYPos());
+       // System.out.println("postman data " + model.getPostman().getXPos()+ "," +model.getPostman().getYPos());
         gImg.drawImage(img1, model.getPostman().getXPos(),model.getPostman().getYPos(), this);
         //gImg.drawImage(model.getPostman().getImg(), model.getPostman().getXPos(), model.getPostman().getYPos(), null);
     }

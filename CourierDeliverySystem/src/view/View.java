@@ -121,9 +121,10 @@ public class View extends JFrame implements ActionListener {
                 radioButton.setActionCommand(m.getName()); //Use the name for the action
                 btnGroup.add(radioButton);
                 radioPanel.add(radioButton);
+                radioButton.setSelected(true);
             }
         });
-
+        
         //Add the radio panel to the main UI
         radioPanel.setLocation(20, 428);
         radioPanel.setSize(109, 80);
