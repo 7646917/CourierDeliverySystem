@@ -7,6 +7,7 @@ package model;
 
 
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -41,7 +42,11 @@ public class Postman extends BaseUnit {
         setXPos(x);
         setYPos(y);
     }
-        
+    
+    public Point getPoint(){
+        return new Point(getXPos(),getYPos());
+    }
+    
     public void setImg(String imgName){
         try {
             img = ImageIO.read(new File(imgName));
