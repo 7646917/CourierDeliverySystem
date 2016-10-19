@@ -6,12 +6,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.geom.Ellipse2D;
 
 /**
  * Created by Dave on 14/09/2016.
  */
-
 public class View extends JFrame implements ActionListener {
 
     private Model model;
@@ -20,33 +18,39 @@ public class View extends JFrame implements ActionListener {
     private JButton btnPost, btnCancel;
     private List listDeliveryQueue;
     private List currentDeliveryList;
-    private MapPanel mapPanel;
+    private JPanel uiPanel;
+    private JLabel lblStart, lblLocations, lblWaiting, lblDelivering;
+    private boolean showPostmanValue;
+    private Postman_View postman;
+    private ImageIcon myImg;
 
-    private JLabel lblLocations, lblWaiting, lblDelivering;
+    public ButtonGroup getBtnGroup() {
+        return btnGroup;
+    }
+
+    public List getCurrentDeliveryList() {
+        return currentDeliveryList;
+    }
 
     public View(Model model) {
         super("Courier Delivery"); //Calls JFrame super constructor
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
         this.model = model;
-
-        getContentPane().setLayout(null);
+        this.showPostmanValue = false;
+        postman = new Postman_View(false, model);
         createGUI();
+
         setActionListeners();
 
-        setResizable(false);
+        getContentPane().setLayout(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 600);
-        setLocationRelativeTo(null);
+        setLocation(100, 100);
         setVisible(true);
     }
 
     public void createGUI() {
 
-
-        mapPanel = new MapPanel(null, true, this.model);
-        mapPanel.setBounds(32, 11, 580, 380);
-        getContentPane().add(mapPanel);
-
+        createUIPanel();
         addAllLists();
         addLocationToWaiting();
 
@@ -126,6 +130,10 @@ public class View extends JFrame implements ActionListener {
         return btnGroup;
     }
 
+    public void setListener(Listener listener) {
+        this.listener = listener;
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (listener != null) {
@@ -143,14 +151,21 @@ public class View extends JFrame implements ActionListener {
 
     }
 
-    public void setListener(Listener listener) {
-        this.listener = listener;
-    }
+    //cretaing UI map panel
+    public JPanel createUIPanel() {
+        uiPanel = new JPanel();
+        uiPanel.setBackground(Color.WHITE);
+        uiPanel.setBounds(32, 11, 580, 380);
+        getContentPane().add(uiPanel);
+        uiPanel.setLayout(null);
 
-    public MapPanel getMapPanel() {
-        return mapPanel;
+        //adding roads
+        Roads c = new Roads(model);
+        uiPanel.add(c);
 
-        /*
+        //adding postman
+        uiPanel.add(postman);
+
         //Loop through and add locations
         model.getLocationList().forEach(m -> {
             JLabel jLabel = new JLabel(m.getName());
@@ -160,19 +175,42 @@ public class View extends JFrame implements ActionListener {
             jLabel.setBounds(m.getXPos(), m.getYPos(), m.getXSize()+30, m.getYSize()+10);
             uiPanel.add(jLabel);
         });
-        return uiPanel;*/
+        uiPanel.add(new BackgroundImages());
+        return uiPanel;
     }
 
-    public JButton getBtnPost() {
-        return btnPost;
+    //make postman visible automatic after three locations added in the list
+    public void showPostMan() {
+        postman.setVisible(true);
     }
 
-    public ButtonGroup getBtnGroup() {
-        return btnGroup;
+    public String test() {
+        System.out.println("testing string");
+        return "TestTest";
     }
+    
+    public class BackgroundImages extends JComponent {
 
-    public List getCurrentDeliveryList() {
-        return currentDeliveryList;
+        public BackgroundImages() {
+            setVisible(true);
+            setBounds(0, 0, 600, 400);
+           // setOpaque(true);
+        }
+
+        public void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            Graphics2D gImg = (Graphics2D) g;
+            gImg.setComposite(AlphaComposite.SrcOver.derive(0.8f));
+            Image img1 = Toolkit.getDefaultToolkit().getImage("src/resources/images/grass.jpg");
+            Image img2 = Toolkit.getDefaultToolkit().getImage("src/resources/images/img4.png");
+            Image img3 = Toolkit.getDefaultToolkit().getImage("src/resources/images/img3.png");
+            //gImg.drawImage(img2,0,0, this);
+            gImg.drawImage(img1,0,0, this);
+            gImg.drawImage(img2,0,0, this);
+            gImg.drawImage(img3,487,0, this);
+        }
     }
-
 }
+
+//}
+

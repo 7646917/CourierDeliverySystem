@@ -22,11 +22,8 @@ public class Model {
         //this.postman = new Postman();
         locationData();
         junctionData();
-
-        this.postman = new Postman("Pat",20,280,50,50);
-        this.postman.setImgName("resources/images/postman.png");
+        this.postman = new Postman("Pat",0,0,0,0);
         this.postman.setLocation(locationList.get(4));
-
     }
     
     public void setPostman(Postman newPostman){
@@ -34,11 +31,9 @@ public class Model {
     }
     
     public Postman getPostman(){
-
-        //System.out.println("getPostman() xPos: " + postman.getXPos()+", yPos: " + postman.getXPos());
+        //System.out.println("getPostman() " + postman.getName()+", " + postman.getXPos());
         return postman;
     }
-
     public void addLocation(Location location) {
         this.locationList.add(location);        
     }
@@ -166,12 +161,14 @@ public class Model {
 
     }
     
+    
+    
     public void locationData(){
-       addLocation(new Location("Shoe Shop","resources/images/house.jpg", 480, 56, 60, 14));
-       addLocation(new Location("Pet Store","resources/images/house.jpg", 450, 320, 90, 14));
-       addLocation(new Location("Airport","resources/images/house.jpg",200, 170, 60, 14));
-       addLocation(new Location("House","resources/images/house.jpg", 328, 237, 60, 14));
-       addLocation(new Location("Start","resources/images/house.jpg", 110, 300, 60, 14));
+       addLocation(new Location("Shoe Shop","src/resources/images/house.jpg", 480, 56, 60, 14));
+       addLocation(new Location("Pet Store","src/resources/images/PetShop.png", 450, 320, 90, 14));
+       addLocation(new Location("Airport","src/resources/images/house.jpg",200, 170, 60, 14));
+       addLocation(new Location("House","src/resources/images/house.jpg", 328, 237, 60, 14));
+       addLocation(new Location("Start","src/resources/images/house.jpg", 110, 300, 60, 14));
 
     }
 }
