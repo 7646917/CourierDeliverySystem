@@ -6,9 +6,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.net.URL;
-import javax.imageio.ImageIO;
 
 /**
  * Created by Dave on 14/09/2016.
@@ -178,6 +175,7 @@ public class View extends JFrame implements ActionListener {
             jLabel.setBounds(m.getXPos(), m.getYPos(), m.getXSize()+30, m.getYSize()+10);
             uiPanel.add(jLabel);
         });
+        uiPanel.add(new BackgroundImages());
         return uiPanel;
     }
 
@@ -189,6 +187,28 @@ public class View extends JFrame implements ActionListener {
     public String test() {
         System.out.println("testing string");
         return "TestTest";
+    }
+    
+    public class BackgroundImages extends JComponent {
+
+        public BackgroundImages() {
+            setVisible(true);
+            setBounds(0, 0, 600, 400);
+           // setOpaque(true);
+        }
+
+        public void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            Graphics2D gImg = (Graphics2D) g;
+            gImg.setComposite(AlphaComposite.SrcOver.derive(0.8f));
+            Image img1 = Toolkit.getDefaultToolkit().getImage("src/resources/images/grass.jpg");
+            Image img2 = Toolkit.getDefaultToolkit().getImage("src/resources/images/img4.png");
+            Image img3 = Toolkit.getDefaultToolkit().getImage("src/resources/images/img3.png");
+            //gImg.drawImage(img2,0,0, this);
+            gImg.drawImage(img1,0,0, this);
+            gImg.drawImage(img2,0,0, this);
+            gImg.drawImage(img3,487,0, this);
+        }
     }
 }
 
