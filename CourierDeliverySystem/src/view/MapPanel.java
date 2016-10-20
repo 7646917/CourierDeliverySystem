@@ -60,9 +60,6 @@ public class MapPanel extends JPanel {
 
     private void drawRoads(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
-        Graphics2D gPath2 = (Graphics2D) g;
-        Graphics2D gPath3 = (Graphics2D) g;
-        Graphics2D gImg = (Graphics2D) g;
 
         GeneralPath path;
         GeneralPath path1;
@@ -87,28 +84,28 @@ public class MapPanel extends JPanel {
         path1.lineTo(450, 550);
         g2.draw(path1);
 
-        gPath2.setPaint(Color.GRAY);
-        gPath2.setStroke(new BasicStroke(20.0f));
+        g2.setPaint(Color.GRAY);
+        g2.setStroke(new BasicStroke(20.0f));
         path2 = new GeneralPath(GeneralPath.WIND_NON_ZERO);
         path2.moveTo(35, 150);
         path2.lineTo(200, 200);
         path2.lineTo(300, 500);
-        gPath2.draw(path2);
+        g2.draw(path2);
 
-        gPath3.setPaint(Color.GRAY);
-        gPath3.setStroke(new BasicStroke(20.0f));
+        g2.setPaint(Color.GRAY);
+        g2.setStroke(new BasicStroke(20.0f));
         path3 = new GeneralPath(GeneralPath.WIND_NON_ZERO);
         path3.moveTo(350, 55);
         path3.lineTo(525, 280);
-        gPath3.draw(path3);
+        g2.draw(path3);
 
+        //DEBUG: Uncomment for visible junctions
+        /*
         g.setColor(Color.green);
-        // g.fillOval(50,50,20,20);
-
         model.getJunctionList().forEach(m -> {
             g.fillOval(m.getXPos(),m.getYPos(),20,20);
             g.drawString(m.getName(), m.getXPos(), m.getYPos());
-        });
+        });*/
     }
 }
 
