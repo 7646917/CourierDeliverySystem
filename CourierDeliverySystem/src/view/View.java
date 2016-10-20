@@ -42,7 +42,6 @@ public class View extends JFrame implements ActionListener {
 
     public void createGUI() {
 
-
         mapPanel = new MapPanel(null, true, this.model);
         mapPanel.setBounds(32, 11, 580, 380);
         getContentPane().add(mapPanel);
@@ -79,10 +78,6 @@ public class View extends JFrame implements ActionListener {
         btnPost.addActionListener(this);
         btnCancel.addActionListener(this);
 
-    }
-
-    public List getListDeliveryQueue() {
-        return listDeliveryQueue;
     }
 
     //adding both waiting and currently delivering list
@@ -149,18 +144,6 @@ public class View extends JFrame implements ActionListener {
 
     public MapPanel getMapPanel() {
         return mapPanel;
-
-        /*
-        //Loop through and add locations
-        model.getLocationList().forEach(m -> {
-            JLabel jLabel = new JLabel(m.getName());
-            //System.out.println(m.getImgName());
-            myImg = new ImageIcon(m.getImgName());
-            jLabel.setIcon(myImg);
-            jLabel.setBounds(m.getXPos(), m.getYPos(), m.getXSize()+30, m.getYSize()+10);
-            uiPanel.add(jLabel);
-        });
-        return uiPanel;*/
     }
 
     public JButton getBtnPost() {
@@ -174,5 +157,10 @@ public class View extends JFrame implements ActionListener {
     public List getCurrentDeliveryList() {
         return currentDeliveryList;
     }
+
+    public List getListDeliveryQueue() {
+        return listDeliveryQueue;
+    }
+
 
 }
