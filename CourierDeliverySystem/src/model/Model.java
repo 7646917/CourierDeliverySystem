@@ -27,6 +27,9 @@ public class Model {
         this.postman.setImgName("resources/images/postman.png");
         this.postman.setLocation(locationList.get(4));
 
+        this.postman.setyPosDrawOffset(-25);
+        //this.postman.setxPosDrawOffset(25);
+
     }
     
     public void setPostman(Postman newPostman){
@@ -166,12 +169,36 @@ public class Model {
 
     }
     
-    public void locationData(){
-       addLocation(new Location("Shoe Shop","resources/images/house.jpg", 480, 56, 60, 14));
-       addLocation(new Location("Pet Store","resources/images/house.jpg", 450, 320, 90, 14));
-       addLocation(new Location("Airport","resources/images/house.jpg",200, 170, 60, 14));
-       addLocation(new Location("House","resources/images/house.jpg", 328, 237, 60, 14));
-       addLocation(new Location("Start","resources/images/house.jpg", 110, 300, 60, 14));
+    public void locationData() {
+        /*
+        addLocation(new Location("Shoe Shop", "resources/images/shoeshop.png", 480, 56, 60, 60));
+        addLocation(new Location("Pet Store", "resources/images/petstore.png", 450, 320, 40, 40));
+        //addLocation(new Location("Airport", "resources/images/airport.png", 200, 170, 40, 40));
+        //addLocation(new Location("Start", "resources/images/postoffice.jpg", 110, 300, 70, 70));
+        */
+        Location shoeshop = new Location("Shoe Shop", "resources/images/shoeshop.png", 480, 56, 60, 60);
+        addLocation(shoeshop);
+
+        Location petstore = new Location("Pet Store", "resources/images/petstore.png", 450, 320, 60, 60);
+        addLocation(petstore);
+
+
+        Location airport = new Location("Airport", "resources/images/airport.png", 200, 170, 80, 80);
+        airport.setyPosDrawOffset(-20);
+        addLocation(airport);
+
+        Location house = new Location("House", "resources/images/house.png", 328, 237, 60, 60);
+        house.setxPosDrawOffset(-10);
+        house.setyPosDrawOffset(-10);
+        addLocation(house);
+
+
+        Location start = new Location("Start", "resources/images/postoffice.jpg", 110, 330, 70, 70);
+        start.setyPosDrawOffset(-40);
+        start.setxPosDrawOffset(10);
+        addLocation(start);
+
+
 
     }
 }

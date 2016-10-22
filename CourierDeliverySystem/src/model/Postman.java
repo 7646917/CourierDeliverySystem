@@ -33,31 +33,6 @@ public class Postman extends BaseUnit {
         isVisible = false;
 
     }
-    
-    public void moveTo(Location loc){
-
-    } 
-    
-    public void moveTo(int x, int y){
-        setXPos(x);
-        setYPos(y);
-    }
-    
-    public Point getPoint(){
-        return new Point(getXPos(),getYPos());
-    }
-    
-    public void setImg(String imgName){
-        try {
-            img = ImageIO.read(new File(imgName));
-        } catch (IOException e) {
-            System.out.println(e);
-        }
-    }
-    
-    public Image getImg(){
-        return img;
-    }
 
     public boolean isVisible() {
         return isVisible;

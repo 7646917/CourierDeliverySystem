@@ -25,32 +25,36 @@ import java.util.List;
     private ArrayList<DirectPath> directPaths;
     private int tentativeDistance;
     private BaseUnit predecessor;
-    
+
+    private int xPosDrawOffset;
+    private int yPosDrawOffset;
+
+
     public String getName() {
         return name;
     }
-    
-    public void setPredecessor(BaseUnit predecessor){
+
+    public void setPredecessor(BaseUnit predecessor) {
         this.predecessor = predecessor;
     }
-    
-    public BaseUnit getPredecessor(){
+
+    public BaseUnit getPredecessor() {
         return predecessor;
     }
-    
-    public void setTentativeDistance(Integer distance){
+
+    public void setTentativeDistance(Integer distance) {
         tentativeDistance = distance;
     }
-    
-    public Integer getTentativeDistance(){
+
+    public Integer getTentativeDistance() {
         return tentativeDistance;
     }
-    
-    
-    public BaseUnit(){
+
+    public BaseUnit() {
         directPaths = new ArrayList<DirectPath>();
         tentativeDistance = Integer.MAX_VALUE;
     }
+
     public BaseUnit(String name, int xPos, int yPos, int xSize, int ySize) {
         this.xPos = xPos;
         this.yPos = yPos;
@@ -59,8 +63,8 @@ import java.util.List;
         this.name = name;
         directPaths = new ArrayList<DirectPath>();
     }
-    
-    public BaseUnit(String name,String imgName, int xPos, int yPos, int xSize, int ySize) {
+
+    public BaseUnit(String name, String imgName, int xPos, int yPos, int xSize, int ySize) {
         this.xPos = xPos;
         this.yPos = yPos;
         this.xSize = xSize;
@@ -69,34 +73,34 @@ import java.util.List;
         this.name = name;
         directPaths = new ArrayList<DirectPath>();
     }
-    
-    public BaseUnit(String jctName, int xPos, int yPos){
+
+    public BaseUnit(String jctName, int xPos, int yPos) {
         this.jctName = jctName;
         this.xPos = xPos;
         this.yPos = yPos;
         directPaths = new ArrayList<DirectPath>();
     }
-    
-    public void setXPos(int x){
+
+    public void setXPos(int x) {
         xPos = x;
     }
-    
-    public void setYPos(int y){
+
+    public void setYPos(int y) {
         yPos = y;
     }
-    
-    public void setXSize(int x){
+
+    public void setXSize(int x) {
         xSize = x;
     }
-    
-    public void setYSize(int y){
+
+    public void setYSize(int y) {
         ySize = y;
     }
-    
-    public void setName(String newName){
+
+    public void setName(String newName) {
         name = newName;
     }
-    
+
     public int getXPos() {
         //System.out.println("xPos " + xPos);
         return xPos;
@@ -122,76 +126,69 @@ import java.util.List;
         this.imgName = imgName;
     }
 
-    public ArrayList<DirectPath> getDirectPaths(){
+    public ArrayList<DirectPath> getDirectPaths() {
         return directPaths;
     }
-    
-    public ArrayList<BaseUnit> getNeighbours(){
+
+    public ArrayList<BaseUnit> getNeighbours() {
         ArrayList<BaseUnit> result = new ArrayList<>();
-        for(DirectPath d : directPaths){
+        for (DirectPath d : directPaths) {
             result.add(d.getEnd());
         }
         return result;
     }
-    
+
     //Get a direct path, if it exists.
-    public DirectPath getDirectPath(BaseUnit endPoint){
+    public DirectPath getDirectPath(BaseUnit endPoint) {
         DirectPath result = null;
-        try{
-        for(DirectPath path : directPaths){
-            if(path.getStart() == this && path.getEnd() == endPoint){ //If it is a valid path.
-                result = path;
+        try {
+            for (DirectPath path : directPaths) {
+                if (path.getStart() == this && path.getEnd() == endPoint) { //If it is a valid path.
+                    result = path;
+                }
             }
-        }
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println("No direct path found");
             System.out.println(e);
         }
         return result;
     }
-    
-    public void addDirectPath(DirectPath directPath){
-        directPaths.add(directPath);
-    }
-    
-    public void addDirectPathTo(BaseUnit end){
-        DirectPath newPath = new DirectPath(this,end);
+
+    public void addDirectPathTo(BaseUnit end) {
+        DirectPath newPath = new DirectPath(this, end);
         directPaths.add(newPath);
     }
-    
-    public void addDirectPathsTo(List<BaseUnit> endPoints){
+
+    public void addDirectPathsTo(List<BaseUnit> endPoints) {
         for (BaseUnit endPoint : endPoints) {
-            DirectPath newPath = new DirectPath(this,endPoint);
+            DirectPath newPath = new DirectPath(this, endPoint);
             directPaths.add(newPath);
         }
     }
-    
-    /***
-     * Whether a path exists to an endpoint from this BaseUnit.
-     * @param endPoint
-     * @return true if path exists to endPoint
-     */
-    public Boolean directPathExists(BaseUnit endPoint){
-        Boolean result = false;
-         for(int i=0;i<directPaths.size();i++){
-            if(directPaths.get(i).getEnd() == endPoint){
-                result = true;
-            }
-        }
-        return result;
+
+    public int getxPosDrawOffset() {
+        return xPosDrawOffset;
     }
-    
-    public String directPaths(){
-        String result = "||| ";
-        for(DirectPath d : directPaths){
-        result += ( d.getStart().getName() + " " +  d.getStart().getXPos() + " " + d.getStart().getYPos());
-        result += " to ";
-        result += (d.getEnd().getName() + " " + d.getEnd().getXPos() + " " + d.getEnd().getYPos());
-        result += (" distance " + d.getDistance());
-        result += " ||| ";
-        }
-        return result;
+
+    public void setxPosDrawOffset(int xPosDrawOffset) {
+        this.xPosDrawOffset = xPosDrawOffset;
     }
-    
-    
+
+    public int getyPosDrawOffset() {
+        return yPosDrawOffset;
+    }
+
+    public void setyPosDrawOffset(int yPosDrawOffset) {
+        this.yPosDrawOffset = yPosDrawOffset;
+    }
+
+    public int getXPosDrawLocation() {
+        return xPos + xPosDrawOffset;
+    }
+
+    public int getYPosDrawLocation() {
+        return yPos + yPosDrawOffset;
+    }
+
+
 }

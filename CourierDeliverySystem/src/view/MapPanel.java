@@ -43,7 +43,7 @@ public class MapPanel extends JPanel {
 
         //Draw postman
         if (postman.isVisible()) {
-            g.drawImage(postImage, postman.getXPos(), postman.getYPos(),
+            g.drawImage(postImage, postman.getXPosDrawLocation(), postman.getYPosDrawLocation(),
                     postman.getXSize(), postman.getYSize(), this);
         }
 
@@ -53,8 +53,9 @@ public class MapPanel extends JPanel {
         //Loop through and add locations
         model.getLocationList().forEach(m -> {
             g.setColor(Color.BLACK);
-            g.drawString(m.getName(),m.getXPos(), m.getYPos());
-            g.drawImage(m.getImg(), m.getXPos(), m.getYPos(), 30, 30, this);
+            //DEBUG: Hiding the labels
+            g.drawString(m.getName(),m.getXPosDrawLocation(), m.getYPosDrawLocation()-5);
+            g.drawImage(m.getImg(), m.getXPosDrawLocation(), m.getYPosDrawLocation(), m.getXSize(), m.getYSize(), this);
         });
     }
 
@@ -100,7 +101,7 @@ public class MapPanel extends JPanel {
         g2.draw(path3);
 
         //DEBUG: Uncomment for visible junctions
-        /*
+/*
         g.setColor(Color.green);
         model.getJunctionList().forEach(m -> {
             g.fillOval(m.getXPos(),m.getYPos(),20,20);

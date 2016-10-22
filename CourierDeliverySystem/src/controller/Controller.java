@@ -155,15 +155,20 @@ public class Controller implements Listener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (postman.getXPos() == end.x && postman.getYPos() == end.y) {
+
             animationLoop.stop();
             enableUI(true);
-            i = 0;
+            postman.setVisible(false);
+            view.getMapPanel().repaint();
 
+            i = 0;
             //GO TO NEXT POINT
             if (!shortest.isEmpty()) {
                 Point point2 = new Point(shortest.get(0).getXPos(), shortest.get(0).getYPos());
                 DeployPostman(point2);
             }
+
+
 
         } else {
             i += INTERPOLATION_FACTOR;
