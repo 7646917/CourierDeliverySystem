@@ -8,9 +8,11 @@ import java.awt.event.ActionEvent;
 import model.*;
 import view.Listener;
 import view.View;
-import javax.swing.Timer;
+
+import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Enumeration;
 
 public class Controller implements Listener {
 
@@ -88,7 +90,9 @@ public class Controller implements Listener {
     public void cancelActionPerformed() {
         view.getListDeliveryQueue().removeAll();
         //view.getCurrentDeliveryList().removeAll();
-        System.out.println("Cancel...");
+
+        //Debug
+        //System.out.println("Cancel...");
 
     }
 
@@ -98,10 +102,14 @@ public class Controller implements Listener {
     //wait
     //
     private void DeployPostman(Point destination) {
-        System.out.println("Deploying postman to " + "{ X:" + destination.getX() + " ||| Y:" + destination.getY() + "}");
+        //DEBUG: Output coordinates
+        //System.out.println("Deploying postman to " + "{ X:" + destination.getX() + " ||| Y:" + destination.getY() + "}");
 
+        //Display Pat
         postman.setVisible(true);
-        view.getBtnPost().setEnabled(false);
+
+        //Disable the UI components
+        enableUI(false);
 
         //Set the start and end destinations
         start = new Point(postman.getXPos(), postman.getYPos());
@@ -121,7 +129,9 @@ public class Controller implements Listener {
         int newX = (int) (start.x + dx * fraction);
         int newY = (int) (start.y + dy * fraction);
 
+        //DEBBUG: Output the coordinates
         //System.out.println("NewX: " + newX + " NewY: "+ newY + "| dx: " + dx + " dy: " + dy + "| endX: " +end.x);
+
         //Catch all when the end has gone past start
         if (dx > 0 && newX > end.x) {
             return end;
@@ -132,12 +142,23 @@ public class Controller implements Listener {
         }
     }
 
+    private void enableUI(boolean enable) {
+
+        view.getBtnPost().setEnabled(enable);
+
+        Enumeration<AbstractButton> enumeration = view.getBtnGroup().getElements();
+        while (enumeration.hasMoreElements()) {
+            enumeration.nextElement().setEnabled(enable);
+        }
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (postman.getXPos() == end.x && postman.getYPos() == end.y) {
             animationLoop.stop();
-            view.getBtnPost().setEnabled(true);
+            enableUI(true);
             i = 0;
+
             //GO TO NEXT POINT
             if (!shortest.isEmpty()) {
                 Point point2 = new Point(shortest.get(0).getXPos(), shortest.get(0).getYPos());
