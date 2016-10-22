@@ -21,8 +21,7 @@ public class View extends JFrame implements ActionListener {
     private List listDeliveryQueue;
     private List currentDeliveryList;
     private MapPanel mapPanel;
-
-    private JLabel lblLocations, lblWaiting, lblDelivering;
+    private JCheckBox chckbxDeliverThroughShortest;
 
     public View(Model model) {
         super("Courier Delivery"); //Calls JFrame super constructor
@@ -47,56 +46,19 @@ public class View extends JFrame implements ActionListener {
         mapPanel.setBackground(new Color(51,255,51));
         getContentPane().add(mapPanel);
 
-        addAllLists();
-        addLocationToWaiting();
-
-        lblLocations = new JLabel("Locations");
-        lblLocations.setBounds(20, 400, 71, 14);
-        getContentPane().add(lblLocations);
-
-        lblWaiting = new JLabel("Waiting for Delivery");
-        lblWaiting.setBounds(283, 400, 98, 14);
-        getContentPane().add(lblWaiting);
-
-        btnCancel = new JButton("Cancel");
-        btnCancel.setActionCommand("Cancel");
-        btnCancel.setBounds(297, 506, 84, 23);
-        getContentPane().add(btnCancel);
-
-        btnPost = new JButton("Send");
-        btnPost.setActionCommand("Send");
-        btnPost.setBounds(135, 450, 89, 23);
-        getContentPane().add(btnPost);
-
-        JCheckBox chckbxDeliverThroughShortest = new JCheckBox("Deliver Through Shortest Path");
-        chckbxDeliverThroughShortest.setBounds(410, 420, 171, 23);
-        getContentPane().add(chckbxDeliverThroughShortest);
-        chckbxDeliverThroughShortest.setSelected(true);
-
-    }
-
-    private void setActionListeners() {
-        btnPost.addActionListener(this);
-        btnCancel.addActionListener(this);
-
-    }
-
-    //adding both waiting and currently delivering list
-    public void addAllLists() {
         listDeliveryQueue = new List();
-        listDeliveryQueue.setBounds(271, 420, 130, 80);
+        listDeliveryQueue.setBounds(271, 428, 130, 80);
         getContentPane().add(listDeliveryQueue);
 
         currentDeliveryList = new List();
         currentDeliveryList.setBounds(640, 131, 110, 60);
         getContentPane().add(currentDeliveryList);
 
-        lblDelivering = new JLabel("Currently Delivering");
-        lblDelivering.setBounds(640, 111, 110, 14);
-        getContentPane().add(lblDelivering);
-    }
+        JLabel lblLocations, lblWaiting, lblDelivering;
 
-    public ButtonGroup addLocationToWaiting() {
+        lblDelivering = new JLabel("Currently Delivering");
+        lblDelivering.setBounds(640, 111, 200, 14);
+        getContentPane().add(lblDelivering);
 
         btnGroup = new ButtonGroup();
 
@@ -114,13 +76,40 @@ public class View extends JFrame implements ActionListener {
             }
         });
 
-
         //Add the radio panel to the main UI
         radioPanel.setLocation(20, 428);
         radioPanel.setSize(109, 80);
         getContentPane().add(radioPanel);
 
-        return btnGroup;
+        lblLocations = new JLabel("Locations");
+        lblLocations.setBounds(20, 400, 71, 14);
+        getContentPane().add(lblLocations);
+
+        lblWaiting = new JLabel("Waiting for Delivery");
+        lblWaiting.setBounds(283, 400, 150, 14);
+        getContentPane().add(lblWaiting);
+
+        btnCancel = new JButton("Cancel");
+        btnCancel.setActionCommand("Cancel");
+        btnCancel.setBounds(297, 515, 84, 23);
+        getContentPane().add(btnCancel);
+
+        btnPost = new JButton("Send");
+        btnPost.setActionCommand("Send");
+        btnPost.setBounds(135, 450, 89, 23);
+        getContentPane().add(btnPost);
+
+        chckbxDeliverThroughShortest = new JCheckBox("Deliver Through Shortest Path");
+        chckbxDeliverThroughShortest.setBounds(410, 420, 300, 23);
+        getContentPane().add(chckbxDeliverThroughShortest);
+        chckbxDeliverThroughShortest.setSelected(true);
+
+    }
+
+    private void setActionListeners() {
+        btnPost.addActionListener(this);
+        btnCancel.addActionListener(this);
+
     }
 
     @Override

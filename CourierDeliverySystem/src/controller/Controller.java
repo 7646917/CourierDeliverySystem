@@ -22,7 +22,7 @@ public class Controller implements Listener {
     private Timer animationLoop;
     private Postman postman;
     private ArrayList<BaseUnit> shortest;
-    private double i; //Interpolation factor
+    private double interpolate_point;
 
     private Point end;
     private Point start;
@@ -40,6 +40,14 @@ public class Controller implements Listener {
     @Override
     public void sendActionPerformed() {
         System.out.println("Send!");
+
+        if (view.getBtnGroup().getSelection() == null) {
+            System.out.println("Nothing selected");
+            JOptionPane.showMessageDialog(view,"Please select a location before pressing Send.", "Selection Required"
+                    , JOptionPane.WARNING_MESSAGE);
+
+        }
+        else
         if (view.getListDeliveryQueue().getItemCount() >= 3) {
             //Don't allow adding. Put feedback here.
 
@@ -156,23 +164,26 @@ public class Controller implements Listener {
     public void actionPerformed(ActionEvent e) {
         if (postman.getXPos() == end.x && postman.getYPos() == end.y) {
 
+            //Postman is at destination. Stop timer and reset the intepolate_point
             animationLoop.stop();
-            enableUI(true);
-            postman.setVisible(false);
-            view.getMapPanel().repaint();
+            interpolate_point = 0;
 
-            i = 0;
             //GO TO NEXT POINT
             if (!shortest.isEmpty()) {
                 Point point2 = new Point(shortest.get(0).getXPos(), shortest.get(0).getYPos());
                 DeployPostman(point2);
+            } else {
+                //No more points in the path
+                enableUI(true);
+                postman.setVisible(false);
+                view.getMapPanel().repaint();
+                view.getCurrentDeliveryList().removeAll();
             }
 
 
-
         } else {
-            i += INTERPOLATION_FACTOR;
-            Point p = interpolate(start, end, i);
+            interpolate_point += INTERPOLATION_FACTOR;
+            Point p = interpolate(start, end, interpolate_point);
             postman.setXPos(p.x);
             postman.setYPos(p.y);
 
