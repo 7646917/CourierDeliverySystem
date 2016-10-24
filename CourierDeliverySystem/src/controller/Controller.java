@@ -23,6 +23,7 @@ public class Controller implements Listener {
     private Postman postman;
     private ArrayList<BaseUnit> shortest;
     private double interpolate_point;
+    private boolean repeatedItem;
 
     private Point end;
     private Point start;
@@ -38,8 +39,8 @@ public class Controller implements Listener {
     }
 
     @Override
-    public void sendActionPerformed() {
-        System.out.println("Send!");
+    public void sendActionPerformed() {        
+        repeatedItem = false;
 
         if (view.getBtnGroup().getSelection() == null) {
             System.out.println("Nothing selected");
@@ -52,7 +53,22 @@ public class Controller implements Listener {
             //Don't allow adding. Put feedback here.
 
         } else {
-            view.getListDeliveryQueue().add(view.getBtnGroup().getSelection().getActionCommand());
+            //checking duplicate destination and if not adding into the waiting list
+            String dest = view.getBtnGroup().getSelection().getActionCommand();
+                       
+            if (view.getListDeliveryQueue().getItemCount() != 0) {
+                for (int j = 0; j < view.getListDeliveryQueue().getItemCount(); j++) {
+                    if ((dest.equals(view.getListDeliveryQueue().getItem(j)))) {
+                         JOptionPane.showMessageDialog(view, "Destination already selected, pl. select another!.", "Selection Required", JOptionPane.WARNING_MESSAGE);
+                        repeatedItem = true;
+                        break;                        
+                    } 
+                }
+            } 
+            if (repeatedItem == false) {                
+                view.getListDeliveryQueue().add(dest);
+                repeatedItem = false;
+            }
             if (view.getListDeliveryQueue().getItemCount() == 3) {
                 //Path newPath = new Path();
                 for (int i = 0; i < 3; i++) {
@@ -137,8 +153,7 @@ public class Controller implements Listener {
         int newX = (int) (start.x + dx * fraction);
         int newY = (int) (start.y + dy * fraction);
 
-        //DEBBUG: Output the coordinates
-        //System.out.println("NewX: " + newX + " NewY: "+ newY + "| dx: " + dx + " dy: " + dy + "| endX: " +end.x);
+        //DEBBUG: Output the coordinates        
 
         //Catch all when the end has gone past start
         if (dx > 0 && newX > end.x) {
